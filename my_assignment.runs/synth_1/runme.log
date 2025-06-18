@@ -1,0 +1,355 @@
+
+*** Running vivado
+    with args -log stream_processor.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source stream_processor.tcl
+
+
+
+****** Vivado v2024.1 (64-bit)
+  **** SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+  **** IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+  **** SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+  **** Start of session at: Fri Jun 13 16:39:02 2025
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source stream_processor.tcl -notrace
+WARNING: [Common 17-1361] You have specified a new message control rule that is equivalent to an existing rule with attributes ' -id {17-179}  -suppress '. The existing rule will be replaced.
+create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 525.559 ; gain = 205.027
+Command: read_checkpoint -auto_incremental -incremental D:/expriment/my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from D:/expriment/my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp for incremental synthesis
+INFO: [Vivado 12-7989] Please ensure there are no constraint changes
+Command: synth_design -top stream_processor -part xc7z020clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Designutils 20-5440] No compile time benefit to using incremental synthesis; A full resynthesis will be run
+INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental criteria not met. If you would like to alter this behaviour and have the flow terminate instead, please set the following parameter config_implementation {autoIncr.Synth.RejectBehavior Terminate}
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+WARNING: [Common 17-1361] You have specified a new message control rule that is equivalent to an existing rule with attributes ' -id {17-179}  -suppress '. The existing rule will be replaced.
+INFO: [Synth 8-7075] Helper process launched with PID 37056
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 990.180 ; gain = 448.812
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-9694] invalid size of integer constant literal [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:172]
+INFO: [Synth 8-6157] synthesizing module 'stream_processor' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'fwft_fifo' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/fwft_fifo.sv:1]
+	Parameter WIDTH bound to: 25 - type: integer 
+	Parameter DEPTH bound to: 256 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'fwft_fifo' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/fwft_fifo.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'non_inter_mechine' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:22]
+INFO: [Synth 8-6155] done synthesizing module 'non_inter_mechine' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:22]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:170]
+INFO: [Synth 8-6155] done synthesizing module 'stream_processor' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:1]
+WARNING: [Synth 8-6014] Unused sequential element fifo_rd_reg_1_reg was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:74]
+WARNING: [Synth 8-7137] Register buffer_3_reg[7] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[6] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[5] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[4] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[3] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[2] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[1] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-7137] Register buffer_3_reg[0] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
+WARNING: [Synth 8-3848] Net buffer_3[10] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
+WARNING: [Synth 8-3848] Net buffer_3[9] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
+WARNING: [Synth 8-3848] Net buffer_3[8] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_a_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:158]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_a_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:158]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_b_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:159]
+WARNING: [Synth 8-6014] Unused sequential element write_ptr_b_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:159]
+WARNING: [Synth 8-6014] Unused sequential element buffer_switch_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:162]
+WARNING: [Synth 8-6014] Unused sequential element buffer_switch_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:162]
+WARNING: [Synth 8-7137] Register m_axis_tvalid_reg in module stream_processor has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:264]
+WARNING: [Synth 8-7137] Register m_axis_tdata_reg in module stream_processor has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:270]
+WARNING: [Synth 8-7129] Port buffer_3[10][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port m_axis_tready in module non_inter_mechine is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1139.176 ; gain = 597.809
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1139.176 ; gain = 597.809
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1139.176 ; gain = 597.809
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'stream_processor'
+INFO: [Device 21-9227] Part: xc7z020clg400-1 does not have CEAM library.
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                    IDLE |                               00 |                              000
+ NON_INTER_MODE_CH1_INIT |                               01 |                              010
+NON_INTER_MODE_CH1_DATA_PROCESS |                               10 |                              011
+NON_INTER_MODE_CH2_DATA_PROCESS |                               11 |                              100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'stream_processor'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1152.758 ; gain = 611.391
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input    9 Bit       Adders := 2     
+	   2 Input    8 Bit       Adders := 8     
+	   2 Input    4 Bit       Adders := 6     
+	   2 Input    3 Bit       Adders := 4     
++---Registers : 
+	               64 Bit    Registers := 1     
+	                9 Bit    Registers := 2     
+	                8 Bit    Registers := 66    
+	                2 Bit    Registers := 5     
+	                1 Bit    Registers := 16    
++---RAMs : 
+	               6K Bit	(256 X 25 bit)          RAMs := 2     
++---Muxes : 
+	   2 Input   64 Bit        Muxes := 5     
+	   2 Input    8 Bit        Muxes := 221   
+	   4 Input    8 Bit        Muxes := 2     
+	   2 Input    4 Bit        Muxes := 12    
+	   2 Input    3 Bit        Muxes := 4     
+	   3 Input    2 Bit        Muxes := 2     
+	   2 Input    2 Bit        Muxes := 7     
+	   4 Input    2 Bit        Muxes := 5     
+	   3 Input    1 Bit        Muxes := 46    
+	   2 Input    1 Bit        Muxes := 176   
+	   4 Input    1 Bit        Muxes := 3     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-7129] Port buffer_3[10][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[10][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[9][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][7] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][6] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][5] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][4] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][3] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][2] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][1] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port buffer_3[8][0] in module non_inter_mechine is either unconnected or has no load
+WARNING: [Synth 8-7129] Port m_axis_tready in module non_inter_mechine is either unconnected or has no load
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'non_inter_mechine:/m_axis_tlast_reg/Q' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
+CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
+CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:31 . Memory (MB): peak = 1369.863 ; gain = 828.496
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Preliminary Mapping Report (see note below)
++-----------------+-------------------------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object                    | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+-------------------------------+-----------+----------------------+--------------+
+|stream_processor | gen_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
+|stream_processor | gen_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
++-----------------+-------------------------------+-----------+----------------------+--------------+
+
+Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:31 . Memory (MB): peak = 1369.863 ; gain = 828.496
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+Distributed RAM: Final Mapping Report
++-----------------+-------------------------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object                    | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+-------------------------------+-----------+----------------------+--------------+
+|stream_processor | gen_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
+|stream_processor | gen_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
++-----------------+-------------------------------+-----------+----------------------+--------------+
+
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+---------+------+
+|      |Cell     |Count |
++------+---------+------+
+|1     |BUFG     |     1|
+|2     |CARRY4   |     4|
+|3     |LUT1     |     9|
+|4     |LUT2     |    54|
+|5     |LUT3     |    84|
+|6     |LUT4     |    82|
+|7     |LUT5     |    59|
+|8     |LUT6     |   442|
+|9     |MUXF7    |    11|
+|10    |RAM64M   |    64|
+|11    |RAM64X1D |     8|
+|12    |FDCE     |   309|
+|13    |FDRE     |   147|
+|14    |IBUF     |    56|
+|15    |OBUF     |    69|
++------+---------+------+
+
+Report Instance Areas: 
++------+--------------------------+--------------------+------+
+|      |Instance                  |Module              |Cells |
++------+--------------------------+--------------------+------+
+|1     |top                       |                    |  1399|
+|2     |  \gen_fifo[0].fifo_inst  |fwft_fifo           |   233|
+|3     |  \gen_fifo[1].fifo_inst  |fwft_fifo_0         |   224|
+|4     |  u_non_inter_mechine_1   |non_inter_mechine   |   362|
+|5     |  u_non_inter_mechine_2   |non_inter_mechine_1 |   347|
++------+--------------------------+--------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 3 critical warnings and 73 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Synthesis Optimization Complete : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1378.488 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 87 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1440.543 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+  A total of 72 instances were transformed.
+  RAM64M => RAM64M (RAMD64E(x4)): 64 instances
+  RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
+
+Synth Design complete | Checksum: 380fda2e
+INFO: [Common 17-83] Releasing license: Synthesis
+26 Infos, 74 Warnings, 3 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:36 ; elapsed = 00:00:39 . Memory (MB): peak = 1440.543 ; gain = 905.504
+INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1440.543 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'D:/expriment/my_assignment/my_assignment.runs/synth_1/stream_processor.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file stream_processor_utilization_synth.rpt -pb stream_processor_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Fri Jun 13 16:39:54 2025...
