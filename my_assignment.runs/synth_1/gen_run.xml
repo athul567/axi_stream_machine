@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<GenRun Id="synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1749812938" LaunchIncrCheckpoint="$PSRCDIR/utils_1/imports/synth_1/stream_processor.dcp">
+<GenRun Id="synth_1" LaunchPart="xc7z020clg400-1" LaunchTime="1749812938" LaunchIncrCheckpoint="$PPRDIR/../../my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp">
   <File Type="PA-TCL" Name="stream_processor.tcl"/>
   <File Type="REPORTS-TCL" Name="stream_processor_reports.tcl"/>
   <File Type="RDS-RDS" Name="stream_processor.vds"/>

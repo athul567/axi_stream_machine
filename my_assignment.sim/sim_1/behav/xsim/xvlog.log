@@ -1,10 +1,13 @@
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/inter_machine.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/all_pkg.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module inter_machine
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_machine.sv" into library xil_defaultlib
+WARNING: [VRFC 10-3380] identifier 'buffer_has_data' is used before its declaration [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:322]
+WARNING: [VRFC 10-2649] an enum variable may only be assigned the same enum typed variable or one of its values [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:411]
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/non_inter_machine.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module non_inter_machine
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module stream_processor
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/sync_fifo.sv" into library xil_defaultlib
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/sync_fifo.sv" into library xil_defaultlib
 INFO: [VRFC 10-311] analyzing module sync_fifo
-INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/my_assignment/my_assignment.srcs/sim_1/new/stream_processor_tb.sv" into library xil_defaultlib
-INFO: [VRFC 10-311] analyzing module stream_processor_tb
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "D:/expriment/new/axi_stream_machine/my_assignment.srcs/sim_1/new/stream_processor_tb.sv" into library xil_defaultlib
+INFO: [VRFC 10-311] analyzing module tb_stream_processor_2
