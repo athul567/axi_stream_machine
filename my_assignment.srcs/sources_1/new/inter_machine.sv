@@ -46,7 +46,7 @@ module inter_machine(
 logic [7:0] buffer_1 [7:0];
 logic [7:0] buffer_2 [7:0];
 logic [7:0] buffer_3 [7:0];
-logic m_axis_tlast_sig;
+logic [3:1] m_axis_tlast_sig;
 logic first_data_on_output;
 logic [47:0] fifo_data_combine;
 logic first_a,buffer_full;
@@ -70,11 +70,7 @@ logic       data_wrt_reg_sel_pulse;
 
 //assign fifo_read = buffer_1_has_data & buffer_2_has_data & buffer_3_has_data;
 
-   assign fifo_read = fifo_valid && (
-                            !buffer_1_has_data ||
-                            !buffer_2_has_data ||
-                            !buffer_3_has_data
-                        );
+   assign fifo_read = fifo_valid && (!buffer_1_has_data ||!buffer_2_has_data ||!buffer_3_has_data);
 
 assign all_buffer_full = buffer_1_has_data && buffer_2_has_data && buffer_3_has_data;
 
@@ -202,7 +198,7 @@ end
                         if (fifo_last_out) begin   
 							buffer_1_has_data <= 1;
                             data_wrt_reg_sel <= STATE_0;
-                            m_axis_tlast_sig <= 1;
+                            m_axis_tlast_sig[1] <= 1;
                             buffer_1[0] <= fifo_data_combine[7:0];
                             buffer_1[1] <= fifo_data_combine[15:8];
                             buffer_1[2] <= fifo_data_combine[23:16];
@@ -213,7 +209,6 @@ end
                             buffer_1[7] <= 0;
                         end else begin
                             data_wrt_reg_sel <= STATE_1;
-                            m_axis_tlast_sig <= 0;
                             buffer_1[0] <= fifo_data_combine[7:0];
                             buffer_1[1] <= fifo_data_combine[15:8];
                             buffer_1[2] <= fifo_data_combine[23:16];
@@ -229,7 +224,7 @@ end
 							buffer_2_has_data <= 1;
 							buffer_1_has_data <= 1;
                             data_wrt_reg_sel <= STATE_0;
-                            m_axis_tlast_sig <= 1;
+                            m_axis_tlast_sig[2] <= 1;
                             buffer_1[6] <= fifo_data_combine[7:0];
                             buffer_1[7] <= fifo_data_combine[15:8];
                             buffer_2[0] <= fifo_data_combine[23:16];
@@ -243,7 +238,6 @@ end
                         end else begin 
 							buffer_1_has_data <= 1;
                             data_wrt_reg_sel <= STATE_2;
-                            m_axis_tlast_sig <= 0;
                             buffer_1[6] <= fifo_data_combine[7:0];
                             buffer_1[7] <= fifo_data_combine[15:8];
                             buffer_2[0] <= fifo_data_combine[23:16];
@@ -259,7 +253,7 @@ end
 							buffer_3_has_data <= 1;
 							buffer_2_has_data <= 1;
                             data_wrt_reg_sel <= STATE_0;
-                            m_axis_tlast_sig <= 1;
+                            m_axis_tlast_sig[3] <= 1;
                             buffer_2[4] <= fifo_data_combine[7:0];
                             buffer_2[5] <= fifo_data_combine[15:8];
                             buffer_2[6] <= fifo_data_combine[23:16];
@@ -274,7 +268,6 @@ end
                             buffer_3[7] <= 0;
                         end else begin
                             data_wrt_reg_sel <= STATE_3;
-                            m_axis_tlast_sig <= 0;
 							buffer_2_has_data <= 1;
                             buffer_2[4] <= fifo_data_combine[7:0];
                             buffer_2[5] <= fifo_data_combine[15:8];
@@ -291,7 +284,7 @@ end
                         if (fifo_last_out) begin    
 							buffer_3_has_data <= 1;
                             data_wrt_reg_sel <= STATE_0;
-                            m_axis_tlast_sig <= 1;
+                            m_axis_tlast_sig[3] <= 1;
 							buffer_full		   <= 1;
                             buffer_3[2] <= fifo_data_combine[7:0];
                             buffer_3[3] <= fifo_data_combine[15:8];
@@ -303,7 +296,6 @@ end
 							buffer_3_has_data  <= 1;
 							buffer_full		   <= 1;
                             data_wrt_reg_sel <= STATE_0;
-                            m_axis_tlast_sig <= 0;
                             buffer_3[2] <= fifo_data_combine[7:0];
                             buffer_3[3] <= fifo_data_combine[15:8];
                             buffer_3[4] <= fifo_data_combine[23:16];
@@ -324,76 +316,64 @@ end
 
 					IDLE: begin
 						if (buffer_1_has_data) begin
-							if (m_axis_tvalid && m_axis_tready) begin
-									buffer_1_has_data   <= 0;
-									if (buffer_2_has_data) begin
-										switch_select      	<= MUX_BUFFER_2;
-										STATE_MUX			<= MUX_BUFFER_2;
-									end else begin
-										switch_select      	<= IDLE;
-										STATE_MUX			<= IDLE;
-									end
-							end else if (!m_axis_tready||!m_axis_tvalid) begin
 									switch_select      	<= MUX_BUFFER_1;
 									STATE_MUX			<= MUX_BUFFER_1;
-							end
-							if (m_axis_tlast_sig) 
-								m_axis_tlast_sig 	<= 0;
 						end
 					end
 					MUX_BUFFER_1: begin
-						if (buffer_1_has_data) begin
-							if (m_axis_tvalid && m_axis_tready) begin
+						if (buffer_1_has_data && m_axis_tready) begin
 									buffer_1_has_data <= 0;
-								if (buffer_2_has_data||!m_axis_tlast_sig) begin
-									switch_select      	<= MUX_BUFFER_2;
-									STATE_MUX			<= MUX_BUFFER_2;
-								end else if (!buffer_2_has_data||!m_axis_tlast_sig) begin
+							if (m_axis_tlast_sig [1]) begin
 									switch_select      	<= IDLE;
-									STATE_MUX			<= MUX_BUFFER_2;
-								end else if (m_axis_tlast_sig) begin
-									switch_select      	<= IDLE;
-									STATE_MUX			<= MUX_BUFFER_1;
-									m_axis_tlast_sig 	<= 0;
-								end
-								if (m_axis_tlast_sig) 
-									m_axis_tlast_sig 	<= 0;
-							end
+									STATE_MUX      		<= IDLE;
+									m_axis_tlast_sig [1] <= 0;
+							end 
+						end else if (buffer_1_has_data && !m_axis_tready) begin
+								switch_select      	<= MUX_BUFFER_1;
+								STATE_MUX			<= MUX_BUFFER_1;
+						end else if (buffer_2_has_data && m_axis_tready) begin
+								switch_select      	<= MUX_BUFFER_2;
+								STATE_MUX			<= MUX_BUFFER_2;
+						end else begin
+								switch_select      	<= MUX_BUFFER_1;
+								STATE_MUX			<= MUX_BUFFER_1;
 						end
 					end
 					MUX_BUFFER_2: begin
-						if (buffer_2_has_data) begin
-							if (m_axis_tvalid && m_axis_tready) begin
+						if (buffer_2_has_data && m_axis_tready) begin
 									buffer_2_has_data <= 0;
-								if (buffer_3_has_data||!m_axis_tlast_sig) begin
-									switch_select      	<= MUX_BUFFER_3;
-									STATE_MUX			<= MUX_BUFFER_3;
-								end else if (!buffer_3_has_data||!m_axis_tlast_sig) begin
-									switch_select      	<= IDLE;
-									STATE_MUX			<= MUX_BUFFER_3;
-								end else if (m_axis_tlast_sig) begin
-									switch_select      	<= IDLE;
-									STATE_MUX			<= MUX_BUFFER_1;
-									m_axis_tlast_sig 	<= 0;
-								end
-								if (m_axis_tlast_sig) 
-									m_axis_tlast_sig 	<= 0;
+
+							if (m_axis_tlast_sig [2] && buffer_1_has_data) begin
+									switch_select      	<= MUX_BUFFER_1;
+									STATE_MUX      		<= MUX_BUFFER_1;
+									m_axis_tlast_sig [2] <= 0;
 							end
-						end 
+						end else if (m_axis_tlast_sig [2] && !buffer_1_has_data) begin
+									switch_select      	<= IDLE;
+									STATE_MUX      		<= IDLE;
+						end else if (buffer_2_has_data && !m_axis_tready) begin
+								switch_select      	<= MUX_BUFFER_2;
+								STATE_MUX			<= MUX_BUFFER_2;
+						end else if (buffer_3_has_data && m_axis_tready ) begin
+								switch_select      	<= MUX_BUFFER_3;
+								STATE_MUX			<= MUX_BUFFER_3;
+						end else begin
+								switch_select      	<= IDLE;
+								STATE_MUX			<= MUX_BUFFER_2;
+						end
 					end
 					MUX_BUFFER_3: begin
-						if (buffer_3_has_data) begin
-							if (m_axis_tvalid && m_axis_tready) begin
+						if (buffer_3_has_data &&  m_axis_tready) begin
 									buffer_3_has_data <= 0;
-								if (buffer_1_has_data) begin
+							if (buffer_1_has_data) begin
 									switch_select      	<= MUX_BUFFER_1;
-									STATE_MUX			<= MUX_BUFFER_1;
-								end else begin
+									STATE_MUX      		<= MUX_BUFFER_1;
+							end else if (!buffer_1_has_data) begin
 									switch_select      	<= IDLE;
-									STATE_MUX			<= IDLE;
-								end
-								if (m_axis_tlast_sig) 
-									m_axis_tlast_sig 	<= 0;
+									STATE_MUX      		<= IDLE;
+							end
+							if (m_axis_tlast_sig [3] ) begin
+									m_axis_tlast_sig [3] <= 0;
 							end
 						end 
 					end
@@ -446,21 +426,45 @@ assign buffer_change_event =
     (buffer_2_has_data ^ buffer_b_has_data_d) |
     (buffer_3_has_data ^ buffer_c_has_data_d);
 
-always @(posedge clk) begin
-	if (m_axis_tvalid && m_axis_tready) begin
-	$display("@%0t 											[DUT]->  buffer_1: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
-			$time,
-			buffer_1[7], buffer_1[6], buffer_1[5], buffer_1[4],
-			buffer_1[3], buffer_1[2], buffer_1[1], buffer_1[0]);$display("@%0t 											[DUT]->  buffer_2: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
-			$time,
-			buffer_2[7], buffer_2[6], buffer_2[5], buffer_2[4],
-			buffer_2[3], buffer_2[2], buffer_2[1], buffer_2[0]);$display("@%0t 											[DUT]->  buffer_3: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
-			$time,
-			buffer_3[7], buffer_3[6], buffer_3[5], buffer_3[4],
-			buffer_3[3], buffer_3[2], buffer_3[1], buffer_3[0]);
-	$display("@%0t 											[DUT] switch_select : %h", $time, switch_select);
-	$display("@%0t   buffer_a : %h , buffer_b : %h buffer_c : %h ", $time, buffer_1_has_data,buffer_2_has_data,buffer_3_has_data);
-	end
+
+function string mux_state_to_string(mux_st state);
+    case (state)
+        MUX_BUFFER_1: return "MUX_BUFFER_1";
+        MUX_BUFFER_2: return "MUX_BUFFER_2";
+        MUX_BUFFER_3: return "MUX_BUFFER_3";
+        IDLE:         return "IDLE";
+        default:      return "UNKNOWN";
+    endcase
+endfunction
+
+
+
+logic count = 0;
+always @(posedge clk or negedge reset_n) begin
+
+		if (!reset_n) begin
+			count <= 0;
+		end
+		if (m_axis_tvalid && m_axis_tready) begin
+				count <= count +1;
+		$display("@%0t  -----------------------------master_packet : %h", $time, count);		
+		$display("@%0t 											[DUT]->  buffer_1: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
+				$time,
+				buffer_1[7], buffer_1[6], buffer_1[5], buffer_1[4],
+				buffer_1[3], buffer_1[2], buffer_1[1], buffer_1[0]);
+		$display("@%0t 											[DUT]->  buffer_2: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
+				$time,
+				buffer_2[7], buffer_2[6], buffer_2[5], buffer_2[4],
+				buffer_2[3], buffer_2[2], buffer_2[1], buffer_2[0]);
+		$display("@%0t 											[DUT]->  buffer_3: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x",
+				$time,
+				buffer_3[7], buffer_3[6], buffer_3[5], buffer_3[4],
+				buffer_3[3], buffer_3[2], buffer_3[1], buffer_3[0]);
+		$display("@%0t 											[DUT] switch_select : %s", $time, mux_state_to_string(switch_select));
+		$display("@%0t 											[DUT] switch_select : %s", $time, mux_state_to_string(STATE_MUX));
+		$display("@%0t                                          buffer_a : %h , buffer_b : %h buffer_c : %h ", $time, buffer_1_has_data,buffer_2_has_data,buffer_3_has_data);
+		$display("@%0t -------------------------------", $time);
+		end
 end
 
 // 

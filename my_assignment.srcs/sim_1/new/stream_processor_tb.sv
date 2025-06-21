@@ -116,12 +116,13 @@ module tb_stream_processor_2;
 
     // Master ready toggling
     initial begin
+        m_axis_tready = 0;
+        #1000;
         m_axis_tready = 1;
-        #40;
-        forever begin
-            m_axis_tready = $urandom_range(0, 1);
-            repeat($urandom_range(1, 4)) @(posedge clk);
-        end
+        //forever begin
+        //    m_axis_tready = $urandom_range(0, 1);
+        //    repeat($urandom_range(1, 4)) @(posedge clk);
+        //end
     end
 
     task test_basic();
@@ -144,7 +145,7 @@ module tb_stream_processor_2;
         s_axis_tvalid = 0;
         s_axis_tlast = 0;
         config_mode = 0;
-        m_axis_tready = 1;
+        //m_axis_tready = 1;
 
         #20;
         reset_n = 1;
