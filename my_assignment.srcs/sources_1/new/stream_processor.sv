@@ -60,7 +60,8 @@ logic [1:0] fifo_last_out;
 logic [1:0] s_rst_n;
 logic [1:0] ch_enable;
 logic [2:0] m_axis_tlast_sig;
-logic [1:0] m_axis_tlast_both;
+logic inter_m_axis_tlast;
+logic  m_axis_tlast_both;
 logic [1:0] reset_init;
 logic [1:0] data_valid;
 //
@@ -106,7 +107,6 @@ logic load_buffer,first_data;
 logic [63:0] m_axis_tdata_sig;
 
 
-mux_st intr_switch_select;
     // === FIFO Instances ===
     genvar ch;
     generate
@@ -133,10 +133,9 @@ mux_st intr_switch_select;
 
 
 
-logic fifo_read;
 logic both_fifo_valid;
 logic [7:0]  inter_m_axis_tdata [7:0];
- 
+logic inter_buffer_has_data;
 
 assign m_axis_tdata_sig = {
     inter_m_axis_tdata[7],
@@ -191,24 +190,18 @@ non_inter_machine u_non_inter_machine_2 (
 
 
 inter_machine u_inter_machine (
-    .clk          (clk),
-    .reset_n     (reset_n),
-    .fifo_data_out_1 (fifo_data_out[0]),
-    .fifo_data_out_2 (fifo_data_out[1]),
-    .start_proces (start_proces),
-    .fifo_last_out (m_axis_tlast_both),//need updated
-    .m_axis_tready (m_axis_tready),
-//    .fifo_rd      (fifo_rd_intr),
-	.m_axis_tvalid_reg(m_axis_tvalid_reg),
-	.first_data(first_data),
-	.load_buffer(load_buffer),
-    .m_axis_tvalid (intr_axis_tvalid),
-    .m_axis_tlast  (m_axis_tlast_sig[2]),  
-    .switch_select (intr_switch_select),
-	.fifo_read(fifo_read),
-	.axi_handshake(axi_handshake),
-	.fifo_valid(both_fifo_valid),
-	.inter_m_axis_tdata(inter_m_axis_tdata)
+    .clk          			(clk)					,
+    .reset_n     			(reset_n)				,
+    .fifo_data_out_1 		(fifo_data_out[0])		,
+    .fifo_data_out_2 		(fifo_data_out[1])		,
+    .fifo_tlast 			(m_axis_tlast_both)		,
+    .inter_m_axis_tready 	(m_axis_tready)			,
+	.fifo_valid				(both_fifo_valid)		,
+	.inter_m_axis_tvalid	(m_axis_tvalid)  		,
+    .fifo_read      		(fifo_rd_intr)			,
+	.inter_buffer_has_data	(inter_buffer_has_data)	,
+    .inter_m_axis_tlast  	(inter_m_axis_tlast)	,  
+	.inter_m_axis_tdata		(inter_m_axis_tdata)
 );
 
     // === Input Side ===
@@ -323,61 +316,41 @@ inter_machine u_inter_machine (
             endcase
         end
     end
-
-always_comb begin
-    case (intr_switch_select)
-        2'b00: m_axis_tdata_after_mux = {buffer_1[7], buffer_1[6], buffer_1[5], buffer_1[4],
-                                        buffer_1[3], buffer_1[2], buffer_1[1], buffer_1[0]};
-        2'b01: m_axis_tdata_after_mux = {buffer_2[7], buffer_2[6], buffer_2[5], buffer_2[4],
-                                        buffer_2[3], buffer_2[2], buffer_2[1], buffer_2[0]};
-        2'b10: m_axis_tdata_after_mux = {buffer_3[7], buffer_3[6], buffer_3[5], buffer_3[4],
-                                        buffer_3[3], buffer_3[2], buffer_3[1], buffer_3[0]};
-        default: m_axis_tdata_after_mux = {buffer_3[7], buffer_3[6], buffer_3[5], buffer_3[4],
-                                           buffer_3[3], buffer_3[2], buffer_3[1], buffer_3[0]};
-    endcase
-end
-    // Input packet tracking. Using a small FIFO for store packet length
-
 mux_st switch_select;
+    // -------------------------
+    // Stage 2: AXI output stage
+    // -------------------------
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+			m_axis_tdata <= '{default:8'h00};
+            m_axis_tvalid <= 1'b0;
+			m_axis_tlast <= 0;
+    end else begin
+        if (m_axis_tvalid && m_axis_tready) begin
+            if (inter_buffer_has_data) begin
+                m_axis_tdata  <= m_axis_tdata_sig;
+                m_axis_tvalid <= 1'b1;
+				m_axis_tlast  <= inter_m_axis_tlast;
+            end else begin
+                m_axis_tvalid <= 1'b0; // No more data to send
+				m_axis_tdata  <= '{default:8'h00};
+				m_axis_tlast <= 0;
+            end
+        end else if (!m_axis_tvalid && inter_buffer_has_data) begin
+            // Load data for the first time
+            m_axis_tdata  <= m_axis_tdata_sig;
+            m_axis_tvalid <= 1'b1;
+			m_axis_tlast  <= inter_m_axis_tlast;
+        end
+    end
+end
 
 
-//always_ff @(posedge clk or negedge reset_n) begin
-//        if (!reset_n) begin
-//				m_axis_tlast			<= 1'b0;
-//				m_axis_tdata			<= 0;
-//				m_axis_tvalid           <= 0;
-//        end else begin
-//						m_axis_tdata  <= m_axis_tdata_sig;
-//						m_axis_tlast  <= m_axis_tlast_sig[2];
-//						m_axis_tvalid <= intr_axis_tvalid;
-//        end
-//end
 
-assign m_axis_tdata  = m_axis_tdata_sig;
-assign m_axis_tlast  = m_axis_tlast_sig[2];
-assign m_axis_tvalid = intr_axis_tvalid;
-assign m_axis_tvalid_reg = m_axis_tvalid;
+assign fifo_rd[0] = fifo_rd_intr;
+assign fifo_rd[1] = fifo_rd_intr;
+assign both_empty = fifo_empty[1] | fifo_empty[0];
 
-
-
-//always_comb begin
-//    // Default first to avoid latch
-//    if (fifo_read) begin
-//        fifo_rd[0] = !fifo_empty[1] && !fifo_empty[0];
-//        fifo_rd[1] = !fifo_empty[1] && !fifo_empty[0];
-//		start_proces = !fifo_empty[1] && !fifo_empty[0];
-//	end else begin
-//        fifo_rd[0] = 0;
-//        fifo_rd[1] = 0;
-//		start_proces = 0;
-//    end
-//end
-
-
-assign fifo_rd[0] = fifo_read;
-assign fifo_rd[1] = fifo_read;
-
-        assign both_empty = fifo_empty[1] | fifo_empty[0];
 
 
 endmodule

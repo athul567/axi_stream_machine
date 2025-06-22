@@ -22,4 +22,16 @@ typedef enum logic [3:0] {
     DATA_TRANSFER = 4'd9
 } S_mux_sel_t;
 
+
+function string mux_state_to_string(mux_st state);
+    case (state)
+        MUX_BUFFER_1: return "MUX_BUFFER_1";
+        MUX_BUFFER_2: return "MUX_BUFFER_2";
+        MUX_BUFFER_3: return "MUX_BUFFER_3";
+        IDLE:         return "IDLE";
+        default:      return "UNKNOWN";
+    endcase
+endfunction
+
+
 endpackage
