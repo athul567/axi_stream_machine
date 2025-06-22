@@ -2,9 +2,12 @@ package all_pkg;
 
 typedef enum logic [3:0] {
     MUX_BUFFER_1 = 4'd0,
-    MUX_BUFFER_2 = 4'd1,
-    MUX_BUFFER_3 = 4'd2,
-    IDLE    = 4'd3
+    MUX_BUFFER_1_IDLE = 4'd1,
+    MUX_BUFFER_2 = 4'd2,
+    MUX_BUFFER_2_IDLE = 4'd3,
+    MUX_BUFFER_3 = 4'd4,
+    MUX_BUFFER_3_IDLE = 4'd5,
+    IDLE    = 4'd6
 } mux_st;
 
 typedef enum logic [3:0] {

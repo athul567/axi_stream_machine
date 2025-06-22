@@ -67,10 +67,11 @@ logic all_buffer_full;
 
 S_mux_sel_t data_wrt_reg_sel_prev;
 logic       data_wrt_reg_sel_pulse;
+logic m_axis_tlast_sig_2;
 
 //assign fifo_read = buffer_1_has_data & buffer_2_has_data & buffer_3_has_data;
 
-   assign fifo_read = fifo_valid && (!buffer_1_has_data ||!buffer_2_has_data ||!buffer_3_has_data);
+   assign fifo_read = fifo_valid && (!buffer_1_has_data);
 
 assign all_buffer_full = buffer_1_has_data && buffer_2_has_data && buffer_3_has_data;
 
@@ -79,29 +80,26 @@ assign all_buffer_full = buffer_1_has_data && buffer_2_has_data && buffer_3_has_
     // -------------------------
 always_ff @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
-            inter_m_axis_tdata[0]  <= '0;
-            inter_m_axis_tdata[1]  <= '0;
-            inter_m_axis_tdata[2]  <= '0;
-            inter_m_axis_tdata[3]  <= '0;
-            inter_m_axis_tdata[4]  <= '0;
-            inter_m_axis_tdata[5]  <= '0;
-            inter_m_axis_tdata[6]  <= '0;
-            inter_m_axis_tdata[7]  <= '0;
+			inter_m_axis_tdata <= '{default:8'h00};
             m_axis_tvalid <= 1'b0;
+			m_axis_tlast <= 0;
     end else begin
         if (m_axis_tvalid && m_axis_tready) begin
             // Transfer occurred, consume the current data
-            if (mux_data_valid) begin
+            if (buffer_has_data) begin
                 inter_m_axis_tdata  <= inter_m_axis_tdata_D;
                 m_axis_tvalid <= 1'b1;
+				m_axis_tlast  <= m_axis_tlast_sig_2;
             end else begin
                 m_axis_tvalid <= 1'b0; // No more data to send
-				inter_m_axis_tdata  = '{default:8'h01};
+				inter_m_axis_tdata  <= '{default:8'h00};
+				m_axis_tlast <= 0;
             end
-        end else if (!m_axis_tvalid && mux_data_valid) begin
+        end else if (!m_axis_tvalid && buffer_has_data) begin
             // Load data for the first time
             inter_m_axis_tdata  <= inter_m_axis_tdata_D;
             m_axis_tvalid <= 1'b1;
+			m_axis_tlast  <= m_axis_tlast_sig_2;
         end
         // else: hold tdata and tvalid
     end
@@ -113,24 +111,18 @@ end
 always_comb begin
     if (switch_select==MUX_BUFFER_1) begin
         inter_m_axis_tdata_D  = buffer_1;
-        //inter_m_axis_tdata_D  = '{default:8'h01};
-		m_axis_tlast   	   = m_axis_tlast_sig;
-		mux_data_valid     = buffer_1_has_data;
+		m_axis_tlast_sig_2   	   = m_axis_tlast_sig[1];
     end else if (switch_select==MUX_BUFFER_2) begin
         inter_m_axis_tdata_D  = buffer_2;
-		m_axis_tlast   	   = m_axis_tlast_sig;
-		mux_data_valid     = buffer_2_has_data;
+		m_axis_tlast_sig_2   	   = m_axis_tlast_sig[2];
     end else if (switch_select==MUX_BUFFER_3) begin
         inter_m_axis_tdata_D  = buffer_3;
-		m_axis_tlast   	   = m_axis_tlast_sig;
-		mux_data_valid     = buffer_3_has_data;
+		m_axis_tlast_sig_2   	   = m_axis_tlast_sig[3];
     end else if (switch_select==IDLE) begin
         inter_m_axis_tdata_D  = '{default:8'h00};
-		m_axis_tlast   	   = 0;
-		mux_data_valid     = 0;
+		m_axis_tlast_sig_2   	   = 0;
     end else begin
-		m_axis_tlast   	   = 0;
-		mux_data_valid     = 0;
+		m_axis_tlast_sig_2   	   = 0;
 		inter_m_axis_tdata_D = '{default:8'h00};
     end
 end
@@ -188,8 +180,8 @@ end
 			buffer_2_has_data <= 0;
 			buffer_3_has_data <= 0;
 			tem2 <= 0;
-			switch_select      <= IDLE;
-			STATE_MUX          <= IDLE;
+			switch_select      <= MUX_BUFFER_1;
+			STATE_MUX          <= MUX_BUFFER_1;
         end else begin
 			tem2 <= 1;
             case (data_wrt_reg_sel)
@@ -313,74 +305,51 @@ end
 // mux selection logic.
 			if (buffer_has_data) begin
 				case (STATE_MUX)
-
-					IDLE: begin
-						if (buffer_1_has_data) begin
-									switch_select      	<= MUX_BUFFER_1;
-									STATE_MUX			<= MUX_BUFFER_1;
-						end
-					end
+			
 					MUX_BUFFER_1: begin
-						if (buffer_1_has_data && m_axis_tready) begin
-									buffer_1_has_data <= 0;
-							if (m_axis_tlast_sig [1]) begin
-									switch_select      	<= IDLE;
-									STATE_MUX      		<= IDLE;
-									m_axis_tlast_sig [1] <= 0;
-							end 
-						end else if (buffer_1_has_data && !m_axis_tready) begin
-								switch_select      	<= MUX_BUFFER_1;
-								STATE_MUX			<= MUX_BUFFER_1;
-						end else if (buffer_2_has_data && m_axis_tready) begin
-								switch_select      	<= MUX_BUFFER_2;
-								STATE_MUX			<= MUX_BUFFER_2;
-						end else begin
-								switch_select      	<= MUX_BUFFER_1;
-								STATE_MUX			<= MUX_BUFFER_1;
+						if ((m_axis_tvalid && m_axis_tready) || !m_axis_tvalid) begin
+							if (m_axis_tlast_sig[1]) begin
+								buffer_1_has_data    <= 0;
+								m_axis_tlast_sig[1]  <= 0;
+								switch_select        <= MUX_BUFFER_1;
+								STATE_MUX            <= MUX_BUFFER_1;
+							end else begin
+								buffer_1_has_data    <= 0;
+								switch_select        <= MUX_BUFFER_2;
+								STATE_MUX            <= MUX_BUFFER_2;
+							end
 						end
 					end
+			
 					MUX_BUFFER_2: begin
-						if (buffer_2_has_data && m_axis_tready) begin
-									buffer_2_has_data <= 0;
-
-							if (m_axis_tlast_sig [2] && buffer_1_has_data) begin
-									switch_select      	<= MUX_BUFFER_1;
-									STATE_MUX      		<= MUX_BUFFER_1;
-									m_axis_tlast_sig [2] <= 0;
+						if ((m_axis_tvalid && m_axis_tready) || !m_axis_tvalid) begin
+							if (m_axis_tlast_sig[2]) begin
+								buffer_2_has_data    <= 0;
+								m_axis_tlast_sig[2]  <= 0;
+								switch_select        <= MUX_BUFFER_1;
+								STATE_MUX            <= MUX_BUFFER_1;
+							end else begin
+								buffer_2_has_data    <= 0;
+								switch_select        <= MUX_BUFFER_3;
+								STATE_MUX            <= MUX_BUFFER_3;
 							end
-						end else if (m_axis_tlast_sig [2] && !buffer_1_has_data) begin
-									switch_select      	<= IDLE;
-									STATE_MUX      		<= IDLE;
-						end else if (buffer_2_has_data && !m_axis_tready) begin
-								switch_select      	<= MUX_BUFFER_2;
-								STATE_MUX			<= MUX_BUFFER_2;
-						end else if (buffer_3_has_data && m_axis_tready ) begin
-								switch_select      	<= MUX_BUFFER_3;
-								STATE_MUX			<= MUX_BUFFER_3;
-						end else begin
-								switch_select      	<= IDLE;
-								STATE_MUX			<= MUX_BUFFER_2;
 						end
 					end
+			
 					MUX_BUFFER_3: begin
-						if (buffer_3_has_data &&  m_axis_tready) begin
-									buffer_3_has_data <= 0;
-							if (buffer_1_has_data) begin
-									switch_select      	<= MUX_BUFFER_1;
-									STATE_MUX      		<= MUX_BUFFER_1;
-							end else if (!buffer_1_has_data) begin
-									switch_select      	<= IDLE;
-									STATE_MUX      		<= IDLE;
-							end
-							if (m_axis_tlast_sig [3] ) begin
-									m_axis_tlast_sig [3] <= 0;
-							end
-						end 
+						if ((m_axis_tvalid && m_axis_tready) || !m_axis_tvalid) begin
+							buffer_3_has_data    <= 0;
+							m_axis_tlast_sig[3]  <= 0;
+							switch_select        <= MUX_BUFFER_1;
+							STATE_MUX            <= MUX_BUFFER_1;
+						end
 					end
+			
 					default: begin
-								switch_select      	<= IDLE;
-								STATE_MUX			<= IDLE;
+						switch_select        <= MUX_BUFFER_1;
+						STATE_MUX            <= MUX_BUFFER_1;
 					end
+			
 				endcase
 			end
         end
