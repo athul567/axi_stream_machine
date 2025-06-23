@@ -26,9 +26,9 @@ module stream_processor (
     logic        start_proces,start_proces_1f,m_axis_tready_next;
     logic        fifo_full [1:0];
     logic        fifo_empty[1:0];
-	logic 		 both_empty;
 	logic        fifo_valid [1:0];
     logic        fifo_rd   [1:0];
+	logic 		 non_inter_fifo_rd [1:0];
 	logic 		 fifo_rd_1 [1:0];
     logic        fifo_wr   [1:0];
 
@@ -42,12 +42,10 @@ logic [7:0] buffer_2_1 [10:0];
 logic [7:0] buffer_2_2 [10:0];
 logic [7:0] buffer_2_3 [10:0];
 logic m_axis_tvalid_reg;
+logic m_axis_tlast_reg;
+logic [1:0] pkt_done_ch;
 
-
-logic buffer_switch[1:0];
-logic [5:0] write_ptr_a[1:0];
 logic [5:0] write_ptr_b[1:0];
-logic [1:0] back_pressure;
 logic [1:0][24:0] fifo_din;  // 24-bit data + 8-bit control (tlast + padding)
 logic [1:0][24:0] fifo_dout;
 logic fifo_ready[1:0];
@@ -55,36 +53,56 @@ logic [2:0] remaining_ptr_a_buf_1;
 logic [2:0] extra_ptr_b_buf_1;
 logic [2:0] remaining_ptr_a_buf_2;
 logic [2:0] extra_ptr_b_buf_2;
-logic [1:0][23:0] fifo_data_out; 
-logic [1:0] fifo_last_out;  
-logic [1:0] s_rst_n;
+logic [1:0][23:0] fifo_data; 
+logic [1:0] fifo_tlast;  
 logic [1:0] ch_enable;
-logic [2:0] m_axis_tlast_sig;
-logic inter_m_axis_tlast;
+logic inter_enable;
+logic [1:0] m_axis_tlast_sig;
+logic inter_buffer_tlast;
 logic  m_axis_tlast_both;
 logic [1:0] reset_init;
-logic [1:0] data_valid;
 //
+mux_st switch_select;
+logic [63:0] inter_buffer_data_stage_2;
+logic internal_buffer_valid_inter;
+logic ch0_valid_stage_2;
+logic ch1_valid_stage_2;
+logic inter_buffer_last;
+logic ch0_last_stage_2;
+logic ch1_last_stage_2;
+logic internal_buffer_ready_inter;
+logic ch0_ready_stage_0;
+logic ch1_ready_stage_0;
+logic ch0_ready_stage_1;
+logic ch1_ready_stage_1;
+logic buffer_valid;
+
 logic [7:0] pkt_cnt_fifo [1:0];
-logic axi_out_mux;
 logic [63:0] m_axis_tdata_after_mux;
+
+
+logic non_inter_mode_ch_0;
+logic non_inter_mode_ch_1;
+logic ch0_stop;
+logic ch1_stop;
+
 
     typedef enum logic [2:0] {
         IDLE,
-        READ_FIFO,NON_INTER_MODE_CH1_INIT,NON_INTER_MODE_CH1_DATA_PROCESS,NON_INTER_MODE_CH2_DATA_PROCESS,INTER_MODE_CH1
+        READ_FIFO,NON_INTER_MODE,INTER_MODE_CH1
     } state_t;
 
     state_t state;
 
     // Extract data from FIFO 
 
-assign fifo_data_out[0]  = fifo_dout[0][23:0];
-assign fifo_data_out[1]  = fifo_dout[1][23:0];
-assign fifo_last_out[0]  = fifo_dout[0][24];    
-assign fifo_last_out[1]  = fifo_dout[1][24];
+assign fifo_data[0]  = fifo_dout[0][23:0];
+assign fifo_data[1]  = fifo_dout[1][23:0];
+assign fifo_tlast[0]  = fifo_dout[0][24];    
+assign fifo_tlast[1]  = fifo_dout[1][24];
 
 
-assign m_axis_tlast_both = fifo_last_out[0] & fifo_last_out[1];
+assign m_axis_tlast_both = fifo_tlast[0] & fifo_tlast[1];
     // Pack data into FIFO
 assign fifo_din[0] = {s_axis_tlast[0],s_axis_tdata[0]};
 assign fifo_din[1] = {s_axis_tlast[1],s_axis_tdata[1]};
@@ -104,7 +122,11 @@ logic [7:0] buffer_1 [7:0];
 logic [7:0] buffer_2 [7:0];
 logic [7:0] buffer_3 [7:0];
 logic load_buffer,first_data;
-logic [63:0] m_axis_tdata_sig;
+logic [63:0] inter_buffer_data;
+logic [63:0] m_axis_tdata_reg;
+logic m_axis_tvalid_reg;
+logic ch1_last_stage_1;
+logic ch0_last_stage_1;
 
 
     // === FIFO Instances ===
@@ -132,76 +154,94 @@ logic [63:0] m_axis_tdata_sig;
 
 
 
+logic [63:0] ch0_data_stage_1;
+logic [63:0] ch1_data_stage_1;
+logic [63:0] ch0_data_stage_2;
+logic [63:0] ch1_data_stage_2;
 
 logic both_fifo_valid;
-logic [7:0]  inter_m_axis_tdata [7:0];
+logic [7:0]  inter_buffer_tdata [7:0];
+logic [7:0]  non_inter_m_axis_tdata_slv_0 [7:0];
+logic [7:0]  non_inter_m_axis_tdata_slv_1 [7:0];
 logic inter_buffer_has_data;
+logic ch0_valid_stage_1;
+logic ch1_valid_stage_1;
+logic ninter_enable;
 
-assign m_axis_tdata_sig = {
-    inter_m_axis_tdata[7],
-    inter_m_axis_tdata[6],
-    inter_m_axis_tdata[5],
-    inter_m_axis_tdata[4],
-    inter_m_axis_tdata[3],
-    inter_m_axis_tdata[2],
-    inter_m_axis_tdata[1],
-    inter_m_axis_tdata[0]
+assign inter_buffer_data = {
+    inter_buffer_tdata[7],
+    inter_buffer_tdata[6],
+    inter_buffer_tdata[5],
+    inter_buffer_tdata[4],
+    inter_buffer_tdata[3],
+    inter_buffer_tdata[2],
+    inter_buffer_tdata[1],
+    inter_buffer_tdata[0]
 };
 
+assign ch0_data_stage_1 = {
+    non_inter_m_axis_tdata_slv_0[7],
+    non_inter_m_axis_tdata_slv_0[6],
+    non_inter_m_axis_tdata_slv_0[5],
+    non_inter_m_axis_tdata_slv_0[4],
+    non_inter_m_axis_tdata_slv_0[3],
+    non_inter_m_axis_tdata_slv_0[2],
+    non_inter_m_axis_tdata_slv_0[1],
+    non_inter_m_axis_tdata_slv_0[0]
+};
 
+assign ch1_data_stage_1 = {
+    non_inter_m_axis_tdata_slv_1[7],
+    non_inter_m_axis_tdata_slv_1[6],
+    non_inter_m_axis_tdata_slv_1[5],
+    non_inter_m_axis_tdata_slv_1[4],
+    non_inter_m_axis_tdata_slv_1[3],
+    non_inter_m_axis_tdata_slv_1[2],
+    non_inter_m_axis_tdata_slv_1[1],
+    non_inter_m_axis_tdata_slv_1[0]
+};
 
 non_inter_machine u_non_inter_machine_1  (
-    .clk                (clk),
-    .reset_n            (s_rst_n[0]),
-
-    .fifo_data_out      (fifo_data_out[0]),
-    .fifo_rd            (fifo_rd_1[0]),
-    .start_proces       (ch_enable[0]),
-    .fifo_last_out      (fifo_last_out[0]),
-	.m_axis_tready      (back_pressure[0]),
-
-    .m_axis_tvalid  	(data_valid[0]),
-    .m_axis_tlast       (m_axis_tlast_sig[0]),
-    .switch_select      (switch_select[0]),
-	.reset_init			(reset_init[0]),
-    .buffer_1           (buffer_1_1),
-    .buffer_2           (buffer_1_2),
-    .buffer_3           (buffer_1_3)
+    .clk                			(clk),
+    .reset_n            			(reset_n),
+	.enable							(ch_enable[0]),
+    .fifo_data          			(fifo_data[0]),
+	.fifo_valid						(fifo_valid[0]),
+    .fifo_tlast    	  				(fifo_tlast[0]),
+	.inter_buffer_ready      		(ch0_ready_stage_0),
+    .fifo_read          			(non_inter_fifo_rd[0]),
+	.non_inter_buffer_has_data		(ch0_valid_stage_1),
+    .non_inter_m_axis_tlast       	(ch0_last_stage_1),
+    .non_inter_m_axis_tdata         (non_inter_m_axis_tdata_slv_0)
 );
 
-non_inter_machine u_non_inter_machine_2 (
-    .clk                (clk),
-    .reset_n            (s_rst_n[1]),
-
-    .fifo_data_out      (fifo_data_out[1]),
-    .fifo_rd            (fifo_rd_1[1]),
-    .start_proces       (ch_enable[1]),
-    .fifo_last_out      (fifo_last_out[1]),
-	.m_axis_tready      (back_pressure[1]),
-
-    .m_axis_tvalid  	(data_valid[1]),
-    .m_axis_tlast       (m_axis_tlast_sig[1]),
-    .switch_select      (switch_select[1]),
-	.reset_init			(reset_init[1]),
-    .buffer_1           (buffer_2_1),
-    .buffer_2           (buffer_2_2),
-    .buffer_3           (buffer_2_3)
+non_inter_machine u_non_inter_machine_2  (
+    .clk                			(clk),
+    .reset_n            			(reset_n),
+	.enable 						(ch_enable[1]),
+    .fifo_data          			(fifo_data[1]),
+    .fifo_tlast    	  				(fifo_tlast[1]),
+	.fifo_valid						(fifo_valid[1]),
+	.inter_buffer_ready      		(ch1_ready_stage_0),
+    .fifo_read            			(non_inter_fifo_rd[1]),
+	.non_inter_buffer_has_data		(ch1_valid_stage_1),
+    .non_inter_m_axis_tlast       	(ch1_last_stage_1),
+    .non_inter_m_axis_tdata         (non_inter_m_axis_tdata_slv_1)
 );
-
 
 inter_machine u_inter_machine (
-    .clk          			(clk)					,
-    .reset_n     			(reset_n)				,
-    .fifo_data_out_1 		(fifo_data_out[0])		,
-    .fifo_data_out_2 		(fifo_data_out[1])		,
-    .fifo_tlast 			(m_axis_tlast_both)		,
-    .inter_m_axis_tready 	(m_axis_tready)			,
-	.fifo_valid				(both_fifo_valid)		,
-	.inter_m_axis_tvalid	(m_axis_tvalid)  		,
-    .fifo_read      		(fifo_rd_intr)			,
-	.inter_buffer_has_data	(inter_buffer_has_data)	,
-    .inter_m_axis_tlast  	(inter_m_axis_tlast)	,  
-	.inter_m_axis_tdata		(inter_m_axis_tdata)
+    .clk          			(clk),
+    .reset_n     			(reset_n),
+	.enable					(inter_enable),
+    .fifo_data_out_1 		(fifo_data[0]),
+    .fifo_data_out_2 		(fifo_data[1]),
+    .fifo_tlast 			(m_axis_tlast_both),
+	.fifo_valid				(both_fifo_valid),
+    .inter_buffer_ready 	(internal_buffer_ready_inter),
+    .fifo_read      		(fifo_rd_intr),
+	.inter_buffer_has_data	(inter_buffer_has_data),
+    .inter_buffer_tlast  	(inter_buffer_tlast),  
+	.inter_buffer_tdata		(inter_buffer_tdata)
 );
 
     // === Input Side ===
@@ -216,141 +256,192 @@ inter_machine u_inter_machine (
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin
             state <= IDLE;
-            pkt_cnt_fifo[1] <= 0;
-            pkt_cnt_fifo[0] <= 0;
             status_packets_size_mismatch <= 0;
-            write_ptr_a[0] <= 1'b0;
-            write_ptr_b[0] <= 1'b0;
-            write_ptr_a[1] <= 1'b0;
-            write_ptr_b[1] <= 1'b0;
-            buffer_switch[0] <= 1'b0;
-            buffer_switch[1] <= 1'b0;
-			s_rst_n 		 <= 2'b0;
 			ch_enable  <=  2'b00;
-			back_pressure <= 2'b00;
-			axi_out_mux  	<= 1'b0;
-			//start_proces <= 1'b0;
-
+			inter_enable <= 0;
+			ninter_enable <= 0;
         end else begin
             case (state)
                 IDLE: begin
-						s_rst_n[1] 		 <= 1'b0;
-						s_rst_n[0] 		 <= 1'b1;
                     if (!config_mode) begin
-                        state <= NON_INTER_MODE_CH1_INIT;
+                        state <= NON_INTER_MODE;
+						ch_enable  <=  2'b11;
+						ninter_enable <= 1;
+						inter_enable <= 0;
                     end else begin
                         state <= INTER_MODE_CH1;
+						ch_enable  <=  2'b00;
+						inter_enable <= 1;
                     end
                 end
-                NON_INTER_MODE_CH1_INIT: begin
-						// initial data process for ch1
-					if (fifo_valid[0] && pkt_cnt_fifo[0] == 2) begin
-						state <= NON_INTER_MODE_CH1_DATA_PROCESS;
-						pkt_cnt_fifo[0] <= 0;
-                          end else if (fifo_valid[0]) begin
-						pkt_cnt_fifo[0] <= pkt_cnt_fifo[0] + 1;
-						ch_enable[0] <= 1;
-					end else begin
-						ch_enable[0] <= 0;
-					end  
-                end
-                NON_INTER_MODE_CH1_DATA_PROCESS: begin
-						pkt_cnt_fifo[0] <= 0;
-						axi_out_mux  	<= 1'b0;
-					if (reset_init[0] && m_axis_tlast_sig[0] && m_axis_tready) begin
-						state 			<= NON_INTER_MODE_CH2_DATA_PROCESS;
-						s_rst_n[0] 		<= 1'b0;
-						ch_enable[0] <= 0;
-					end else if (!m_axis_tready) begin 
-						ch_enable[0] <= 0;
-					end else if (m_axis_tready && fifo_valid[0]) begin
-						ch_enable[0] <= 1;
-					end 
-
-						// initial data process for ch2
-                    if (fifo_valid[1] && pkt_cnt_fifo[1]==3) begin
-						ch_enable[1] <= 0;
-						pkt_cnt_fifo[1] <= pkt_cnt_fifo[1];
-					end else if(fifo_valid[1] && pkt_cnt_fifo[1]==0) begin
-						s_rst_n[1] 		<= 1'b1;
-						ch_enable[1] <= 0;
-						pkt_cnt_fifo[1] <= pkt_cnt_fifo[1] + 1;
-					end else if (fifo_valid[1]) begin 
-						pkt_cnt_fifo[1] <= pkt_cnt_fifo[1] + 1;
-						ch_enable[1] <= 1;
-					end else  begin
-						ch_enable[1] <= 0;
-                    end
-
-				end
-                NON_INTER_MODE_CH2_DATA_PROCESS: begin
-								pkt_cnt_fifo[1] <= 0;
-								axi_out_mux  	<= 1'b1;
-					if (reset_init[1] && m_axis_tlast_sig[1] && m_axis_tready) begin
-						state 			<= NON_INTER_MODE_CH1_DATA_PROCESS;
-						s_rst_n[1] 		<= 1'b0;
-						ch_enable[1] <= 0;
-					end else if (!m_axis_tready) begin 
-						ch_enable[1] <= 0;
-					end else if (m_axis_tready && fifo_valid[1]) begin
-						ch_enable[1] <= 1;
-					end 
-						// initial data process for ch2
-                    if (fifo_valid[0] && pkt_cnt_fifo[0]==3) begin
-						ch_enable[0] <= 0;
-						pkt_cnt_fifo[0] <= pkt_cnt_fifo[0];
-					end else if(fifo_valid[0] && pkt_cnt_fifo[0]==0) begin
-						s_rst_n[0] 		<= 1'b1;
-						ch_enable[0] <= 0;
-						pkt_cnt_fifo[0] <= pkt_cnt_fifo[0] + 1;
-					end else if (fifo_valid[0]) begin 
-						pkt_cnt_fifo[0] <= pkt_cnt_fifo[0] + 1;
-						ch_enable[0] <= 1;
-					end else  begin
-						ch_enable[0] <= 0;
+                NON_INTER_MODE: begin
+                    if (!config_mode) begin
+                        state <= NON_INTER_MODE;
+						ch_enable  <=  2'b11;
+						ninter_enable <= 1;
+						inter_enable <= 0;
+                    end else begin
+                        state <= INTER_MODE_CH1;
+						ch_enable  <=  2'b00;
+						inter_enable <= 1;
                     end
                 end
                 INTER_MODE_CH1: begin
-							//start_proces <= fifo_valid[0] & fifo_valid[1];
-				end
+                    if (!config_mode) begin
+                        state <= NON_INTER_MODE;
+						ch_enable  <=  2'b11;
+						ninter_enable <= 1;
+						inter_enable <= 0;
+                    end else begin
+                        state <= INTER_MODE_CH1;
+						ch_enable  <=  2'b00;
+						inter_enable <= 1;
+                    end
+                end
             endcase
         end
     end
-mux_st switch_select;
-    // -------------------------
-    // Stage 2: AXI output stage
-    // -------------------------
+
+
+assign internal_buffer_ready_inter 			= !internal_buffer_valid_inter || (!m_axis_tvalid || m_axis_tready);
+assign ch0_ready_stage_0 	= (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
+assign ch1_ready_stage_0 	= (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
+assign ch0_ready_stage_1 = (!ch0_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
+assign ch1_ready_stage_1 = (!ch1_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
+
+
+// -------------------------
+// Stage 2: Internal Register before output
+// -------------------------
+// AXI output stage (connects to internal buffer)
 always_ff @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
-			m_axis_tdata <= '{default:8'h00};
-            m_axis_tvalid <= 1'b0;
-			m_axis_tlast <= 0;
+			inter_buffer_data_stage_2 <= '{default:8'h00};
+			ch0_data_stage_2 <= '{default:8'h00};
+			ch1_data_stage_2 <= '{default:8'h00};
+			inter_buffer_last <= 1'b0;
+			ch0_last_stage_2 <= 1'b0;
+			ch1_last_stage_2 <= 1'b0;
+			internal_buffer_valid_inter <= 1'b0;
+			ch0_valid_stage_2 <= 1'b0;
+			ch1_valid_stage_2 <= 1'b0;
+			ch0_stop				  		  <= 0;
+			ch1_stop				  		  <= 0;
     end else begin
-        if (m_axis_tvalid && m_axis_tready) begin
-            if (inter_buffer_has_data) begin
-                m_axis_tdata  <= m_axis_tdata_sig;
-                m_axis_tvalid <= 1'b1;
-				m_axis_tlast  <= inter_m_axis_tlast;
-            end else begin
-                m_axis_tvalid <= 1'b0; // No more data to send
-				m_axis_tdata  <= '{default:8'h00};
-				m_axis_tlast <= 0;
-            end
-        end else if (!m_axis_tvalid && inter_buffer_has_data) begin
-            // Load data for the first time
-            m_axis_tdata  <= m_axis_tdata_sig;
-            m_axis_tvalid <= 1'b1;
-			m_axis_tlast  <= inter_m_axis_tlast;
-        end
+
+// This is for inter mode
+		if (internal_buffer_ready_inter && inter_buffer_has_data) begin  
+			inter_buffer_data_stage_2 <= inter_buffer_data;
+			internal_buffer_valid_inter <= 1'b1;
+			inter_buffer_last <= inter_buffer_tlast;
+		end else if (internal_buffer_valid_inter && internal_buffer_ready_inter) begin
+			internal_buffer_valid_inter <= 1'b0;
+			inter_buffer_last <= 1'b0;
+		end
+// This is for non-inter mode chn0
+			if (ch0_ready_stage_0 && ch0_valid_stage_1) begin
+				ch0_data_stage_2 	<= ch0_data_stage_1;
+				ch0_valid_stage_2 	<= 1'b1;
+				ch0_last_stage_2 	<= ch0_last_stage_1;
+			end else if (ch0_valid_stage_2 && ch0_ready_stage_0) begin
+				ch0_valid_stage_2 	<= 1'b0;
+				ch0_last_stage_2 	<= 1'b0;
+			end
+// This is for non-inter mode chn1
+			if (ch1_ready_stage_0 && ch1_valid_stage_1) begin
+				ch1_data_stage_2 	<= ch1_data_stage_1;
+				ch1_valid_stage_2 	<= 1'b1;
+				ch1_last_stage_2 	<= ch1_last_stage_1;
+			end else if (ch1_valid_stage_2 && ch1_ready_stage_0) begin
+				ch1_valid_stage_2 	<= 1'b0;
+				ch1_last_stage_2 	<= 1'b0;
+			end
     end
+end
+// -------------------------
+// Stage 3: AXI output stage
+// -------------------------
+// AXI output stage (connects to output port)
+always_ff @(posedge clk or negedge reset_n) begin
+    if (!reset_n) begin
+        m_axis_tdata <= '{default:8'h00};
+        m_axis_tvalid <= 1'b0;
+        m_axis_tlast <= 1'b0;
+		non_inter_mode_ch_0 <= 1;
+		non_inter_mode_ch_1 <= 0;
+    end else begin
+		// This is for inter mode
+		if (inter_enable) begin
+			if (m_axis_tvalid && m_axis_tready) begin
+				if (internal_buffer_valid_inter) begin
+					m_axis_tdata  <= inter_buffer_data_stage_2;
+					m_axis_tvalid <= 1'b1;
+					m_axis_tlast  <= inter_buffer_last;
+				end else begin
+					m_axis_tvalid <= 1'b0;
+					m_axis_tlast  <= 1'b0;
+				end 
+			end else if (!m_axis_tvalid && internal_buffer_valid_inter) begin
+				m_axis_tdata  <= inter_buffer_data_stage_2;
+				m_axis_tvalid <= 1'b1;
+				m_axis_tlast  <= inter_buffer_last;
+			end
+		end
+
+		if (ninter_enable) begin
+			if (non_inter_mode_ch_0) begin 							// This is for non-inter mode chn0
+				if (m_axis_tvalid && m_axis_tready) begin
+					if (ch0_valid_stage_2) begin
+						m_axis_tdata  <= ch0_data_stage_2;
+						m_axis_tvalid <= 1'b1;
+						m_axis_tlast  <= ch0_last_stage_2;
+					end else begin
+						m_axis_tvalid <= 1'b0;
+						m_axis_tlast  <= 1'b0;
+					end 
+				end else if (!m_axis_tvalid && ch0_valid_stage_2) begin
+					m_axis_tdata  <= ch0_data_stage_2;
+					m_axis_tvalid <= 1'b1;
+					m_axis_tlast  <= ch0_last_stage_2;
+				end
+				if (ch0_last_stage_2&&((m_axis_tvalid && m_axis_tready) || (!m_axis_tvalid && ch0_valid_stage_2))) begin
+							non_inter_mode_ch_0 <= 0;
+							non_inter_mode_ch_1 <= 1;
+				end
+			end else if (non_inter_mode_ch_1) begin 				// This is for non-inter mode chn1
+				if (m_axis_tvalid && m_axis_tready) begin
+					if (ch1_valid_stage_2) begin
+						m_axis_tdata  <= ch1_data_stage_2;
+						m_axis_tvalid <= 1'b1;
+						m_axis_tlast  <= ch1_last_stage_2;
+					end else begin
+						m_axis_tvalid <= 1'b0;
+						m_axis_tlast  <= 1'b0;
+					end 
+				end else if (!m_axis_tvalid && ch1_valid_stage_2) begin
+					m_axis_tdata  <= ch1_data_stage_2;
+					m_axis_tvalid <= 1'b1;
+					m_axis_tlast  <= ch1_last_stage_2;
+				end
+				if (ch1_last_stage_2&&((m_axis_tvalid && m_axis_tready) || (!m_axis_tvalid && ch1_valid_stage_2))) begin
+							non_inter_mode_ch_0 <= 1;
+							non_inter_mode_ch_1 <= 0;
+				end
+			end
+		end
+	end
 end
 
 
-
-assign fifo_rd[0] = fifo_rd_intr;
-assign fifo_rd[1] = fifo_rd_intr;
-assign both_empty = fifo_empty[1] | fifo_empty[0];
-
+always_comb begin
+	if (config_mode) begin
+		fifo_rd[0] = fifo_rd_intr ;
+		fifo_rd[1] = fifo_rd_intr ;
+	end else begin
+		fifo_rd[0] = non_inter_fifo_rd[0];
+		fifo_rd[1] = non_inter_fifo_rd[1];
+	end
+end 
 
 
 endmodule

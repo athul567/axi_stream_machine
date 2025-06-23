@@ -16,10 +16,9 @@ typedef enum logic [3:0] {
     STATE_2  = 4'd3,
     STATE_3  = 4'd4,
     STATE_4  = 4'd5,
-    STATE_BUFFER_0 = 4'd6,
-    STATE_BUFFER_1 = 4'd7,
-    STATE_BUFFER_2 = 4'd8,
-    DATA_TRANSFER = 4'd9
+    STATE_5  = 4'd6,
+    STATE_6  = 4'd7,
+    STATE_7  = 4'd8
 } S_mux_sel_t;
 
 

@@ -18,13 +18,13 @@ module tb_stream_processor_2;
     logic             m_axis_tvalid;
     logic             m_axis_tready;
     logic             m_axis_tlast;
-
+    logic handshake;
     // Configuration
     logic             config_mode;
     logic             status_packets_size_mismatch;
 
     // Data counters
-    logic [7:0] ch0_data_counter = 8'hA0;
+    logic [7:0] ch0_data_counter = 8'h00;
     logic [7:0] ch1_data_counter = 8'hA0;
 
     // Clock generation
@@ -106,13 +106,17 @@ module tb_stream_processor_2;
     // Output monitor
     always @(posedge clk) begin
         if (reset_n && m_axis_tvalid && m_axis_tready) begin
+                      handshake <= 1;
             $display("@%0t                              -> MASTER_OUTPUT: %02x_%02x_%02x_%02x_%02x_%02x_%02x_%02x LAST=%0d",
                      $time,
                      m_axis_tdata[63:56], m_axis_tdata[55:48], m_axis_tdata[47:40], m_axis_tdata[39:32],
                      m_axis_tdata[31:24], m_axis_tdata[23:16], m_axis_tdata[15:8],  m_axis_tdata[7:0],
                      m_axis_tlast);
+        end else begin
+                      handshake <= 0;
         end
     end
+	
 
     // Master ready toggling
     initial begin
@@ -126,7 +130,7 @@ module tb_stream_processor_2;
 
     task test_basic();
         $display("@%0t\n*** TEST: CH0 and CH1 sending packets ***", $time);
-        config_mode = 0;
+        config_mode = 1;
         #10;
 
         fork
@@ -143,7 +147,7 @@ module tb_stream_processor_2;
         s_axis_tdata = 0;
         s_axis_tvalid = 0;
         s_axis_tlast = 0;
-        config_mode = 0;
+        config_mode = 1;
         m_axis_tready = 1;
 
         #20;
@@ -151,6 +155,10 @@ module tb_stream_processor_2;
         #20;
 
         $display("@%0t === AXI4-Stream Processor Testbench Started ===", $time);
+        test_basic();
+        #20;
+        test_basic();
+        #20;
         test_basic();
         #20;
         test_basic();

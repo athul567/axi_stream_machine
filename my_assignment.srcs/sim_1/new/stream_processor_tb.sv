@@ -25,7 +25,7 @@ module tb_stream_processor_2;
 
     // Data counters
     logic [7:0] ch0_data_counter = 8'hA0;
-    logic [7:0] ch1_data_counter = 8'hA0;
+    logic [7:0] ch1_data_counter = 8'hC0;
 
     // Clock generation
     initial begin

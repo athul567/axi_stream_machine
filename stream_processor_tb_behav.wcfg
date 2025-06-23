@@ -12,209 +12,140 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="463.833 ns"></ZoomStartTime>
-      <ZoomEndTime time="477.684 ns"></ZoomEndTime>
-      <Cursor1Time time="535.000 ns"></Cursor1Time>
+      <ZoomStartTime time="185.800 ns"></ZoomStartTime>
+      <ZoomEndTime time="254.401 ns"></ZoomEndTime>
+      <Cursor1Time time="245.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="435"></NameColumnWidth>
-      <ValueColumnWidth column_width="291"></ValueColumnWidth>
+      <NameColumnWidth column_width="558"></NameColumnWidth>
+      <ValueColumnWidth column_width="102"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="47" />
+   <WVObjectSize size="6" />
    <wave_markers>
       <marker time="285000" label="" />
    </wave_markers>
-   <wvobject fp_name="/tb_stream_processor_2/clk_monitor" type="logic">
-      <obj_property name="ElementShortName">clk_monitor</obj_property>
-      <obj_property name="ObjectShortName">clk_monitor</obj_property>
-      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="group61" type="group">
+      <obj_property name="label">ch0 stage0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_valid_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch0_valid_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch0_valid_stage_1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_data_stage_1" type="array">
+         <obj_property name="ElementShortName">ch0_data_stage_1[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ch0_data_stage_1[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_last_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch0_last_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch0_last_stage_1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_ready_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch0_ready_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch0_ready_stage_1</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-      <obj_property name="CustomSignalColor">#0000FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/mux_data_valid" type="logic">
-      <obj_property name="ElementShortName">mux_data_valid</obj_property>
-      <obj_property name="ObjectShortName">mux_data_valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tdata" type="array">
-      <obj_property name="ElementShortName">m_axis_tdata[63:0]</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tdata[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tvalid" type="logic">
-      <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tready" type="logic">
-      <obj_property name="ElementShortName">m_axis_tready</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/inter_m_axis_tdata_D" type="array">
-      <obj_property name="ElementShortName">inter_m_axis_tdata_D[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">inter_m_axis_tdata_D[7:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/STATE_MUX" type="array">
-      <obj_property name="ElementShortName">STATE_MUX[3:0]</obj_property>
-      <obj_property name="ObjectShortName">STATE_MUX[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tlast" type="logic">
-      <obj_property name="ElementShortName">m_axis_tlast</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tlast</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/m_axis_tlast_sig" type="array">
-      <obj_property name="ElementShortName">m_axis_tlast_sig[3:1]</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tlast_sig[3:1]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_change_event" type="logic">
-      <obj_property name="ElementShortName">buffer_change_event</obj_property>
-      <obj_property name="ObjectShortName">buffer_change_event</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_read" type="logic">
-      <obj_property name="ElementShortName">fifo_read</obj_property>
-      <obj_property name="ObjectShortName">fifo_read</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_valid" type="logic">
-      <obj_property name="ElementShortName">fifo_valid</obj_property>
-      <obj_property name="ObjectShortName">fifo_valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_1_has_data" type="logic">
-      <obj_property name="ElementShortName">buffer_1_has_data</obj_property>
-      <obj_property name="ObjectShortName">buffer_1_has_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_2_has_data" type="logic">
-      <obj_property name="ElementShortName">buffer_2_has_data</obj_property>
-      <obj_property name="ObjectShortName">buffer_2_has_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_3_has_data" type="logic">
-      <obj_property name="ElementShortName">buffer_3_has_data</obj_property>
-      <obj_property name="ObjectShortName">buffer_3_has_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/data_wrt_reg_sel" type="array">
-      <obj_property name="ElementShortName">data_wrt_reg_sel[3:0]</obj_property>
-      <obj_property name="ObjectShortName">data_wrt_reg_sel[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_1" type="array">
-      <obj_property name="ElementShortName">buffer_1[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">buffer_1[7:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_2" type="array">
-      <obj_property name="ElementShortName">buffer_2[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">buffer_2[7:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_3" type="array">
-      <obj_property name="ElementShortName">buffer_3[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">buffer_3[7:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_data_combine" type="array">
-      <obj_property name="ElementShortName">fifo_data_combine[47:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_data_combine[47:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/inter_m_axis_tdata" type="array">
-      <obj_property name="ElementShortName">inter_m_axis_tdata[7:0][7:0]</obj_property>
-      <obj_property name="ObjectShortName">inter_m_axis_tdata[7:0][7:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/switch_select" type="array">
-      <obj_property name="ElementShortName">switch_select[3:0]</obj_property>
-      <obj_property name="ObjectShortName">switch_select[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tdata" type="array">
-      <obj_property name="ElementShortName">m_axis_tdata[63:0]</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tdata[63:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tdata" type="array">
-      <obj_property name="ElementShortName">s_axis_tdata[1:0][23:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axis_tdata[1:0][23:0]</obj_property>
+   <wvobject fp_name="group65" type="group">
+      <obj_property name="label">ch0 stage1</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_data_stage_2" type="array">
+         <obj_property name="ElementShortName">ch0_data_stage_2[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ch0_data_stage_2[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_valid_stage_2" type="logic">
+         <obj_property name="ElementShortName">ch0_valid_stage_2</obj_property>
+         <obj_property name="ObjectShortName">ch0_valid_stage_2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch0_last_stage_2" type="logic">
+         <obj_property name="ElementShortName">ch0_last_stage_2</obj_property>
+         <obj_property name="ObjectShortName">ch0_last_stage_2</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/reset_n" type="logic">
-      <obj_property name="ElementShortName">reset_n</obj_property>
-      <obj_property name="ObjectShortName">reset_n</obj_property>
+   <wvobject fp_name="group70" type="group">
+      <obj_property name="label">ch1 stage0</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_valid_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch1_valid_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch1_valid_stage_1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_data_stage_1" type="array">
+         <obj_property name="ElementShortName">ch1_data_stage_1[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ch1_data_stage_1[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_last_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch1_last_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch1_last_stage_1</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_ready_stage_1" type="logic">
+         <obj_property name="ElementShortName">ch1_ready_stage_1</obj_property>
+         <obj_property name="ObjectShortName">ch1_ready_stage_1</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_data_out_1" type="array">
-      <obj_property name="ElementShortName">fifo_data_out_1[23:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_data_out_1[23:0]</obj_property>
+   <wvobject fp_name="group75" type="group">
+      <obj_property name="label">ch1 stage2</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_data_stage_2" type="array">
+         <obj_property name="ElementShortName">ch1_data_stage_2[63:0]</obj_property>
+         <obj_property name="ObjectShortName">ch1_data_stage_2[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_valid_stage_2" type="logic">
+         <obj_property name="ElementShortName">ch1_valid_stage_2</obj_property>
+         <obj_property name="ObjectShortName">ch1_valid_stage_2</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_stop" type="logic">
+         <obj_property name="ElementShortName">ch1_stop</obj_property>
+         <obj_property name="ObjectShortName">ch1_stop</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/ch1_last_stage_2" type="logic">
+         <obj_property name="ElementShortName">ch1_last_stage_2</obj_property>
+         <obj_property name="ObjectShortName">ch1_last_stage_2</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_data_out_2" type="array">
-      <obj_property name="ElementShortName">fifo_data_out_2[23:0]</obj_property>
-      <obj_property name="ObjectShortName">fifo_data_out_2[23:0]</obj_property>
+   <wvobject fp_name="group56" type="group">
+      <obj_property name="label">handshake done</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/clk" type="logic">
+         <obj_property name="ElementShortName">clk</obj_property>
+         <obj_property name="ObjectShortName">clk</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tdata" type="array">
+         <obj_property name="ElementShortName">m_axis_tdata[63:0]</obj_property>
+         <obj_property name="ObjectShortName">m_axis_tdata[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tvalid" type="logic">
+         <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
+         <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tready" type="logic">
+         <obj_property name="ElementShortName">m_axis_tready</obj_property>
+         <obj_property name="ObjectShortName">m_axis_tready</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/m_axis_tlast" type="logic">
+         <obj_property name="ElementShortName">m_axis_tlast</obj_property>
+         <obj_property name="ObjectShortName">m_axis_tlast</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/handshake" type="logic">
+         <obj_property name="ElementShortName">handshake</obj_property>
+         <obj_property name="ObjectShortName">handshake</obj_property>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/start_proces" type="logic">
-      <obj_property name="ElementShortName">start_proces</obj_property>
-      <obj_property name="ObjectShortName">start_proces</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/fifo_last_out" type="logic">
-      <obj_property name="ElementShortName">fifo_last_out</obj_property>
-      <obj_property name="ObjectShortName">fifo_last_out</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/m_axis_tready" type="logic">
-      <obj_property name="ElementShortName">m_axis_tready</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tready</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/m_axis_tvalid_reg" type="logic">
-      <obj_property name="ElementShortName">m_axis_tvalid_reg</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tvalid_reg</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/first_data" type="logic">
-      <obj_property name="ElementShortName">first_data</obj_property>
-      <obj_property name="ObjectShortName">first_data</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/load_buffer" type="logic">
-      <obj_property name="ElementShortName">load_buffer</obj_property>
-      <obj_property name="ObjectShortName">load_buffer</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/m_axis_tvalid" type="logic">
-      <obj_property name="ElementShortName">m_axis_tvalid</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tvalid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/m_axis_tlast" type="logic">
-      <obj_property name="ElementShortName">m_axis_tlast</obj_property>
-      <obj_property name="ObjectShortName">m_axis_tlast</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/axi_handshake" type="logic">
-      <obj_property name="ElementShortName">axi_handshake</obj_property>
-      <obj_property name="ObjectShortName">axi_handshake</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/first_data_on_output" type="logic">
-      <obj_property name="ElementShortName">first_data_on_output</obj_property>
-      <obj_property name="ObjectShortName">first_data_on_output</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/first_a" type="logic">
-      <obj_property name="ElementShortName">first_a</obj_property>
-      <obj_property name="ObjectShortName">first_a</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/buffer_full" type="logic">
-      <obj_property name="ElementShortName">buffer_full</obj_property>
-      <obj_property name="ObjectShortName">buffer_full</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/all_3_buf_ful" type="logic">
-      <obj_property name="ElementShortName">all_3_buf_ful</obj_property>
-      <obj_property name="ObjectShortName">all_3_buf_ful</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/tem2" type="logic">
-      <obj_property name="ElementShortName">tem2</obj_property>
-      <obj_property name="ObjectShortName">tem2</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/stage2_valid" type="logic">
-      <obj_property name="ElementShortName">stage2_valid</obj_property>
-      <obj_property name="ObjectShortName">stage2_valid</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/all_buffer_full" type="logic">
-      <obj_property name="ElementShortName">all_buffer_full</obj_property>
-      <obj_property name="ObjectShortName">all_buffer_full</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/u_inter_machine/clk" type="logic">
-      <obj_property name="ElementShortName">clk</obj_property>
-      <obj_property name="ObjectShortName">clk</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tdata" type="array">
-      <obj_property name="ElementShortName">s_axis_tdata[1:0][23:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axis_tdata[1:0][23:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tdata" type="array">
-      <obj_property name="ElementShortName">s_axis_tdata[1:0][23:0]</obj_property>
-      <obj_property name="ObjectShortName">s_axis_tdata[1:0][23:0]</obj_property>
+   <wvobject fp_name="group79" type="group">
+      <obj_property name="label">aeadac,0e0d0c--bdbcbb,1d1c1b--cccbca,2c2b2a</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tdata" type="array">
+         <obj_property name="ElementShortName">s_axis_tdata[1:0][23:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_tdata[1:0][23:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tvalid" type="array">
+         <obj_property name="ElementShortName">s_axis_tvalid[1:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_tvalid[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
+      <wvobject fp_name="/tb_stream_processor_2/dut/s_axis_tlast" type="array">
+         <obj_property name="ElementShortName">s_axis_tlast[1:0]</obj_property>
+         <obj_property name="ObjectShortName">s_axis_tlast[1:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+      </wvobject>
    </wvobject>
 </wave_config>
