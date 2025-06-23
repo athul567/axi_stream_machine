@@ -4,7 +4,7 @@
 
 set TIME_start [clock seconds] 
 namespace eval ::optrace {
-  variable script "D:/expriment/my_assignment/my_assignment.runs/synth_1/stream_processor.tcl"
+  variable script "D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1/stream_processor.tcl"
   variable category "vivado_synth"
 }
 
@@ -64,20 +64,22 @@ create_project -in_memory -part xc7z020clg400-1
 set_param project.singleFileAddWarning.threshold 0
 set_param project.compositeFile.enableAutoGeneration 0
 set_param synth.vivado.isSynthRun true
-set_property webtalk.parent_dir D:/expriment/my_assignment/my_assignment.cache/wt [current_project]
-set_property parent.project_path D:/expriment/my_assignment/my_assignment.xpr [current_project]
+set_property webtalk.parent_dir D:/expriment/new/axi_stream_machine/my_assignment.cache/wt [current_project]
+set_property parent.project_path D:/expriment/new/axi_stream_machine/my_assignment.xpr [current_project]
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language VHDL [current_project]
 set_property board_part_repo_paths {C:/Users/athul/AppData/Roaming/Xilinx/Vivado/2024.1/xhub/board_store/xilinx_board_store} [current_project]
 set_property board_part tul.com.tw:pynq-z2:part0:1.0 [current_project]
-set_property ip_output_repo d:/expriment/my_assignment/my_assignment.cache/ip [current_project]
+set_property ip_output_repo d:/expriment/new/axi_stream_machine/my_assignment.cache/ip [current_project]
 set_property ip_cache_permissions {read write} [current_project]
 OPTRACE "Creating in-memory project" END { }
 OPTRACE "Adding files" START { }
 read_verilog -library xil_defaultlib -sv {
-  D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/fwft_fifo.sv
-  D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv
-  D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv
+  D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/all_pkg.sv
+  D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv
+  D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/non_inter_machine.sv
+  D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/sync_fifo.sv
+  D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv
 }
 OPTRACE "Adding files" END { }
 # Mark all dcp files as not used in implementation to prevent them from being
@@ -90,7 +92,7 @@ foreach dcp [get_files -quiet -all -filter file_type=="Design\ Checkpoint"] {
 }
 set_param ips.enableIPCacheLiteLoad 1
 
-read_checkpoint -auto_incremental -incremental D:/expriment/my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp
+read_checkpoint -auto_incremental -incremental D:/expriment/new/axi_stream_machine/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }

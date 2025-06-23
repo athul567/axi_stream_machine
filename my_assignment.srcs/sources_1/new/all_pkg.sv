@@ -21,6 +21,11 @@ typedef enum logic [3:0] {
     STATE_7  = 4'd8
 } S_mux_sel_t;
 
+typedef enum logic [2:0] {
+    STATE_IDLE,
+    READ_FIFO,NON_INTER_MODE,INTER_MODE_CH1
+} state_t;
+
 
 function string mux_state_to_string(mux_st state);
     case (state)
@@ -31,6 +36,8 @@ function string mux_state_to_string(mux_st state);
         default:      return "UNKNOWN";
     endcase
 endfunction
+
+
 
 
 endpackage

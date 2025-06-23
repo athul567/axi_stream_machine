@@ -3,12 +3,12 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Fri Jun 13 16:39:02 2025
-# Process ID: 15176
-# Current directory: D:/expriment/my_assignment/my_assignment.runs/synth_1
+# Start of session at: Mon Jun 23 19:26:35 2025
+# Process ID: 40020
+# Current directory: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1
 # Command line: vivado.exe -log stream_processor.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source stream_processor.tcl
-# Log file: D:/expriment/my_assignment/my_assignment.runs/synth_1/stream_processor.vds
-# Journal file: D:/expriment/my_assignment/my_assignment.runs/synth_1\vivado.jou
+# Log file: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1/stream_processor.vds
+# Journal file: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1\vivado.jou
 # Running On        :athulbhx
 # Platform          :Windows Server 2016 or Windows 10
 # Operating System  :26100
@@ -17,15 +17,15 @@
 # CPU Physical cores:16
 # CPU Logical cores :22
 # Host memory       :16597 MB
-# Swap memory       :19327 MB
-# Total Virtual     :35924 MB
-# Available Virtual :13280 MB
+# Swap memory       :23764 MB
+# Total Virtual     :40362 MB
+# Available Virtual :3512 MB
 #-----------------------------------------------------------
 source stream_processor.tcl -notrace
 WARNING: [Common 17-1361] You have specified a new message control rule that is equivalent to an existing rule with attributes ' -id {17-179}  -suppress '. The existing rule will be replaced.
-create_project: Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 525.559 ; gain = 205.027
-Command: read_checkpoint -auto_incremental -incremental D:/expriment/my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp
-INFO: [Vivado 12-5825] Read reference checkpoint from D:/expriment/my_assignment/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp for incremental synthesis
+create_project: Time (s): cpu = 00:00:13 ; elapsed = 00:00:15 . Memory (MB): peak = 524.262 ; gain = 201.398
+Command: read_checkpoint -auto_incremental -incremental D:/expriment/new/axi_stream_machine/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp
+INFO: [Vivado 12-5825] Read reference checkpoint from D:/expriment/new/axi_stream_machine/my_assignment.srcs/utils_1/imports/synth_1/stream_processor.dcp for incremental synthesis
 INFO: [Vivado 12-7989] Please ensure there are no constraint changes
 Command: synth_design -top stream_processor -part xc7z020clg400-1
 Starting synth_design
@@ -36,92 +36,87 @@ INFO: [Designutils 20-4379] Flow is switching to default flow due to incremental
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
 WARNING: [Common 17-1361] You have specified a new message control rule that is equivalent to an existing rule with attributes ' -id {17-179}  -suppress '. The existing rule will be replaced.
-INFO: [Synth 8-7075] Helper process launched with PID 37056
+INFO: [Synth 8-7075] Helper process launched with PID 51148
 ---------------------------------------------------------------------------------
-Starting Synthesize : Time (s): cpu = 00:00:07 ; elapsed = 00:00:08 . Memory (MB): peak = 990.180 ; gain = 448.812
+Starting Synthesize : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 990.020 ; gain = 449.645
 ---------------------------------------------------------------------------------
-WARNING: [Synth 8-9694] invalid size of integer constant literal [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:172]
-INFO: [Synth 8-6157] synthesizing module 'stream_processor' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:1]
-INFO: [Synth 8-6157] synthesizing module 'fwft_fifo' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/fwft_fifo.sv:1]
+CRITICAL WARNING: [Synth 8-9339] data object 'm_axis_tvalid_reg' is already declared [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:127]
+INFO: [Synth 8-6826] previous declaration of 'm_axis_tvalid_reg' is from here [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:44]
+CRITICAL WARNING: [Synth 8-11152] second declaration of 'm_axis_tvalid_reg' is ignored [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:127]
+INFO: [Synth 8-6157] synthesizing module 'stream_processor' [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:4]
+INFO: [Synth 8-6157] synthesizing module 'sync_fifo' [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/sync_fifo.sv:1]
 	Parameter WIDTH bound to: 25 - type: integer 
 	Parameter DEPTH bound to: 256 - type: integer 
-INFO: [Synth 8-6155] done synthesizing module 'fwft_fifo' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/fwft_fifo.sv:1]
-INFO: [Synth 8-6157] synthesizing module 'non_inter_mechine' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:22]
-INFO: [Synth 8-6155] done synthesizing module 'non_inter_mechine' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:22]
-INFO: [Synth 8-155] case statement is not full and has no default [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:170]
-INFO: [Synth 8-6155] done synthesizing module 'stream_processor' (0#1) [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:1]
-WARNING: [Synth 8-6014] Unused sequential element fifo_rd_reg_1_reg was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:74]
-WARNING: [Synth 8-7137] Register buffer_3_reg[7] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[6] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[5] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[4] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[3] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[2] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[1] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-7137] Register buffer_3_reg[0] in module non_inter_mechine has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:146]
-WARNING: [Synth 8-3848] Net buffer_3[10] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
-WARNING: [Synth 8-3848] Net buffer_3[9] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
-WARNING: [Synth 8-3848] Net buffer_3[8] in module/entity non_inter_mechine does not have driver. [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:39]
-WARNING: [Synth 8-6014] Unused sequential element write_ptr_a_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:158]
-WARNING: [Synth 8-6014] Unused sequential element write_ptr_a_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:158]
-WARNING: [Synth 8-6014] Unused sequential element write_ptr_b_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:159]
-WARNING: [Synth 8-6014] Unused sequential element write_ptr_b_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:159]
-WARNING: [Synth 8-6014] Unused sequential element buffer_switch_reg[1] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:162]
-WARNING: [Synth 8-6014] Unused sequential element buffer_switch_reg[0] was removed.  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:162]
-WARNING: [Synth 8-7137] Register m_axis_tvalid_reg in module stream_processor has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:264]
-WARNING: [Synth 8-7137] Register m_axis_tdata_reg in module stream_processor has both Set and reset with same priority. This may cause simulation mismatches. Consider rewriting code  [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/stream_processor.sv:270]
-WARNING: [Synth 8-7129] Port buffer_3[10][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port m_axis_tready in module non_inter_mechine is either unconnected or has no load
+INFO: [Synth 8-6155] done synthesizing module 'sync_fifo' (0#1) [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/sync_fifo.sv:1]
+INFO: [Synth 8-6157] synthesizing module 'non_inter_machine' [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/non_inter_machine.sv:22]
+INFO: [Synth 8-6155] done synthesizing module 'non_inter_machine' (0#1) [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/non_inter_machine.sv:22]
+INFO: [Synth 8-6157] synthesizing module 'inter_machine' [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:24]
+INFO: [Synth 8-6155] done synthesizing module 'inter_machine' (0#1) [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:24]
+INFO: [Synth 8-155] case statement is not full and has no default [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:264]
+INFO: [Synth 8-6155] done synthesizing module 'stream_processor' (0#1) [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:4]
+WARNING: [Synth 8-6014] Unused sequential element first_a_reg was removed.  [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/non_inter_machine.sv:88]
+WARNING: [Synth 8-87] always_comb on 'inter_buffer_has_data_reg' did not result in combinational logic [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:63]
+WARNING: [Synth 8-6014] Unused sequential element ch0_stop_reg was removed.  [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:328]
+WARNING: [Synth 8-6014] Unused sequential element ch1_stop_reg was removed.  [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/stream_processor.sv:329]
 ---------------------------------------------------------------------------------
-Finished Synthesize : Time (s): cpu = 00:00:10 ; elapsed = 00:00:11 . Memory (MB): peak = 1139.176 ; gain = 597.809
+Finished Synthesize : Time (s): cpu = 00:00:19 ; elapsed = 00:00:23 . Memory (MB): peak = 1117.945 ; gain = 577.570
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1139.176 ; gain = 597.809
+Finished Constraint Validation : Time (s): cpu = 00:00:21 ; elapsed = 00:00:25 . Memory (MB): peak = 1117.945 ; gain = 577.570
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z020clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:10 ; elapsed = 00:00:12 . Memory (MB): peak = 1139.176 ; gain = 597.809
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:21 ; elapsed = 00:00:25 . Memory (MB): peak = 1117.945 ; gain = 577.570
 ---------------------------------------------------------------------------------
 INFO: [Device 21-403] Loading part xc7z020clg400-1
-INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'stream_processor'
-INFO: [Device 21-9227] Part: xc7z020clg400-1 does not have CEAM library.
+INFO: [Synth 8-802] inferred FSM for state register 'data_wrt_reg_sel_reg' in module 'non_inter_machine'
+INFO: [Synth 8-802] inferred FSM for state register 'switch_select_reg' in module 'non_inter_machine'
+INFO: [Synth 8-802] inferred FSM for state register 'data_wrt_reg_sel_reg' in module 'inter_machine'
+INFO: [Synth 8-802] inferred FSM for state register 'switch_select_reg' in module 'inter_machine'
 ---------------------------------------------------------------------------------------------------
                    State |                     New Encoding |                Previous Encoding 
 ---------------------------------------------------------------------------------------------------
-                    IDLE |                               00 |                              000
- NON_INTER_MODE_CH1_INIT |                               01 |                              010
-NON_INTER_MODE_CH1_DATA_PROCESS |                               10 |                              011
-NON_INTER_MODE_CH2_DATA_PROCESS |                               11 |                              100
+                 STATE_0 |                         00000001 |                             0001
+                 STATE_1 |                         00000010 |                             0010
+                 STATE_2 |                         00000100 |                             0011
+                 STATE_3 |                         00001000 |                             0100
+                 STATE_4 |                         00010000 |                             0101
+                 STATE_5 |                         00100000 |                             0110
+                 STATE_6 |                         01000000 |                             0111
+                 STATE_7 |                         10000000 |                             1000
 ---------------------------------------------------------------------------------------------------
-INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'stream_processor'
+INFO: [Synth 8-3354] encoded FSM with state register 'data_wrt_reg_sel_reg' using encoding 'one-hot' in module 'non_inter_machine'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+            MUX_BUFFER_1 |                               00 |                             0000
+            MUX_BUFFER_2 |                               01 |                             0010
+            MUX_BUFFER_3 |                               10 |                             0100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'switch_select_reg' using encoding 'sequential' in module 'non_inter_machine'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+                 STATE_0 |                               00 |                             0001
+                 STATE_1 |                               01 |                             0010
+                 STATE_2 |                               10 |                             0011
+                 STATE_3 |                               11 |                             0100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'data_wrt_reg_sel_reg' using encoding 'sequential' in module 'inter_machine'
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+            MUX_BUFFER_1 |                               00 |                             0000
+            MUX_BUFFER_2 |                               01 |                             0010
+            MUX_BUFFER_3 |                               10 |                             0100
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'switch_select_reg' using encoding 'sequential' in module 'inter_machine'
+WARNING: [Synth 8-327] inferring latch for variable 'inter_buffer_has_data_reg' [D:/expriment/new/axi_stream_machine/my_assignment.srcs/sources_1/new/inter_machine.sv:63]
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:14 ; elapsed = 00:00:14 . Memory (MB): peak = 1152.758 ; gain = 611.391
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:24 ; elapsed = 00:00:27 . Memory (MB): peak = 1128.766 ; gain = 588.391
 ---------------------------------------------------------------------------------
 No constraint files found.
 ---------------------------------------------------------------------------------
@@ -130,35 +125,43 @@ Start RTL Component Statistics
 Detailed RTL Component Info : 
 +---Adders : 
 	   2 Input    9 Bit       Adders := 2     
-	   2 Input    8 Bit       Adders := 8     
-	   2 Input    4 Bit       Adders := 6     
-	   2 Input    3 Bit       Adders := 4     
+	   2 Input    8 Bit       Adders := 6     
 +---Registers : 
-	               64 Bit    Registers := 1     
+	               64 Bit    Registers := 4     
 	                9 Bit    Registers := 2     
-	                8 Bit    Registers := 66    
-	                2 Bit    Registers := 5     
-	                1 Bit    Registers := 16    
+	                8 Bit    Registers := 76    
+	                3 Bit    Registers := 4     
+	                2 Bit    Registers := 1     
+	                1 Bit    Registers := 23    
 +---RAMs : 
 	               6K Bit	(256 X 25 bit)          RAMs := 2     
 +---Muxes : 
-	   2 Input   64 Bit        Muxes := 5     
-	   2 Input    8 Bit        Muxes := 221   
-	   4 Input    8 Bit        Muxes := 2     
-	   2 Input    4 Bit        Muxes := 12    
-	   2 Input    3 Bit        Muxes := 4     
-	   3 Input    2 Bit        Muxes := 2     
-	   2 Input    2 Bit        Muxes := 7     
-	   4 Input    2 Bit        Muxes := 5     
-	   3 Input    1 Bit        Muxes := 46    
-	   2 Input    1 Bit        Muxes := 176   
-	   4 Input    1 Bit        Muxes := 3     
+	   2 Input   64 Bit        Muxes := 9     
+	   2 Input   48 Bit        Muxes := 1     
+	   8 Input    8 Bit        Muxes := 38    
+	   2 Input    8 Bit        Muxes := 14    
+	   3 Input    8 Bit        Muxes := 24    
+	   4 Input    8 Bit        Muxes := 12    
+	   3 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 3     
+	   8 Input    3 Bit        Muxes := 4     
+	   3 Input    3 Bit        Muxes := 6     
+	   4 Input    3 Bit        Muxes := 2     
+	   3 Input    2 Bit        Muxes := 5     
+	   2 Input    2 Bit        Muxes := 25    
+	   4 Input    2 Bit        Muxes := 1     
+	   3 Input    1 Bit        Muxes := 26    
+	   8 Input    1 Bit        Muxes := 36    
+	   2 Input    1 Bit        Muxes := 74    
+	   4 Input    1 Bit        Muxes := 15    
+	   5 Input    1 Bit        Muxes := 1     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Part Resource Summary
 ---------------------------------------------------------------------------------
+INFO: [Device 21-9227] Part: xc7z020clg400-1 does not have CEAM library.
 Part Resources:
 DSPs: 220 (col length:60)
 BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
@@ -170,48 +173,21 @@ No constraint files found.
 Start Cross Boundary and Area Optimization
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
-WARNING: [Synth 8-7129] Port buffer_3[10][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[10][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[9][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][7] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][6] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][5] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][4] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][3] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][2] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][1] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port buffer_3[8][0] in module non_inter_mechine is either unconnected or has no load
-WARNING: [Synth 8-7129] Port m_axis_tready in module non_inter_mechine is either unconnected or has no load
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 1st driver pin 'non_inter_mechine:/m_axis_tlast_reg/Q' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
-CRITICAL WARNING: [Synth 8-6859] multi-driven net on pin Q with 2nd driver pin 'GND' [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
-CRITICAL WARNING: [Synth 8-6858] multi-driven net Q is connected to at least one constant driver which has been preserved, other driver is ignored [D:/expriment/my_assignment/my_assignment.srcs/sources_1/new/non_inter_mechine.sv:65]
+WARNING: [Synth 8-3332] Sequential element (u_inter_machine/inter_buffer_has_data_reg) is unused and will be removed from module stream_processor.
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:31 . Memory (MB): peak = 1369.863 ; gain = 828.496
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:43 ; elapsed = 00:00:52 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 
 Distributed RAM: Preliminary Mapping Report (see note below)
-+-----------------+-------------------------------+-----------+----------------------+--------------+
-|Module Name      | RTL Object                    | Inference | Size (Depth x Width) | Primitives   | 
-+-----------------+-------------------------------+-----------+----------------------+--------------+
-|stream_processor | gen_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
-|stream_processor | gen_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
-+-----------------+-------------------------------+-----------+----------------------+--------------+
++-----------------+--------------------------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object                     | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+--------------------------------+-----------+----------------------+--------------+
+|stream_processor | sync_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
+|stream_processor | sync_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
++-----------------+--------------------------------+-----------+----------------------+--------------+
 
 Note: The table above is a preliminary report that shows the Distributed RAMs at the current stage of the synthesis flow. Some Distributed RAMs may be reimplemented as non Distributed RAM primitives later in the synthesis flow. Multiple instantiated RAMs are reported only once.
 ---------------------------------------------------------------------------------
@@ -222,19 +198,19 @@ No constraint files found.
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:00:28 ; elapsed = 00:00:31 . Memory (MB): peak = 1369.863 ; gain = 828.496
+Finished Timing Optimization : Time (s): cpu = 00:00:44 ; elapsed = 00:00:52 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
 
 Distributed RAM: Final Mapping Report
-+-----------------+-------------------------------+-----------+----------------------+--------------+
-|Module Name      | RTL Object                    | Inference | Size (Depth x Width) | Primitives   | 
-+-----------------+-------------------------------+-----------+----------------------+--------------+
-|stream_processor | gen_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
-|stream_processor | gen_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
-+-----------------+-------------------------------+-----------+----------------------+--------------+
++-----------------+--------------------------------+-----------+----------------------+--------------+
+|Module Name      | RTL Object                     | Inference | Size (Depth x Width) | Primitives   | 
++-----------------+--------------------------------+-----------+----------------------+--------------+
+|stream_processor | sync_fifo[0].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
+|stream_processor | sync_fifo[1].fifo_inst/mem_reg | Implied   | 256 x 25             | RAM64M x 36  | 
++-----------------+--------------------------------+-----------+----------------------+--------------+
 
 ---------------------------------------------------------------------------------
 Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
@@ -243,7 +219,7 @@ Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
 Start Technology Mapping
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:00:29 ; elapsed = 00:00:32 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Technology Mapping : Time (s): cpu = 00:00:45 ; elapsed = 00:00:54 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -261,37 +237,37 @@ Start Final Netlist Cleanup
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished IO Insertion : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -309,56 +285,57 @@ Report Cell Usage:
 +------+---------+------+
 |1     |BUFG     |     1|
 |2     |CARRY4   |     4|
-|3     |LUT1     |     9|
-|4     |LUT2     |    54|
-|5     |LUT3     |    84|
-|6     |LUT4     |    82|
-|7     |LUT5     |    59|
-|8     |LUT6     |   442|
-|9     |MUXF7    |    11|
-|10    |RAM64M   |    64|
-|11    |RAM64X1D |     8|
-|12    |FDCE     |   309|
-|13    |FDRE     |   147|
+|3     |LUT1     |    11|
+|4     |LUT2     |   411|
+|5     |LUT3     |    30|
+|6     |LUT4     |    68|
+|7     |LUT5     |   243|
+|8     |LUT6     |   223|
+|9     |RAM64M   |    64|
+|10    |RAM64X1D |     8|
+|11    |FDCE     |   885|
+|12    |FDPE     |     3|
+|13    |FDRE     |    50|
 |14    |IBUF     |    56|
 |15    |OBUF     |    69|
 +------+---------+------+
 
 Report Instance Areas: 
-+------+--------------------------+--------------------+------+
-|      |Instance                  |Module              |Cells |
-+------+--------------------------+--------------------+------+
-|1     |top                       |                    |  1399|
-|2     |  \gen_fifo[0].fifo_inst  |fwft_fifo           |   233|
-|3     |  \gen_fifo[1].fifo_inst  |fwft_fifo_0         |   224|
-|4     |  u_non_inter_mechine_1   |non_inter_mechine   |   362|
-|5     |  u_non_inter_mechine_2   |non_inter_mechine_1 |   347|
-+------+--------------------------+--------------------+------+
++------+---------------------------+--------------------+------+
+|      |Instance                   |Module              |Cells |
++------+---------------------------+--------------------+------+
+|1     |top                        |                    |  2126|
+|2     |  \sync_fifo[0].fifo_inst  |sync_fifo           |   145|
+|3     |  \sync_fifo[1].fifo_inst  |sync_fifo_0         |   144|
+|4     |  u_inter_machine          |inter_machine       |   393|
+|5     |  u_non_inter_machine_1    |non_inter_machine   |   479|
+|6     |  u_non_inter_machine_2    |non_inter_machine_1 |   480|
++------+---------------------------+--------------------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 3 critical warnings and 73 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
-Synthesis Optimization Complete : Time (s): cpu = 00:00:33 ; elapsed = 00:00:36 . Memory (MB): peak = 1375.637 ; gain = 834.270
+Synthesis finished with 0 errors, 2 critical warnings and 8 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
+Synthesis Optimization Complete : Time (s): cpu = 00:00:55 ; elapsed = 00:01:06 . Memory (MB): peak = 1351.414 ; gain = 811.039
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.019 . Memory (MB): peak = 1378.488 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 87 Unisim elements for replacement
-INFO: [Netlist 29-28] Unisim Transformation completed in 1 CPU seconds
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.043 . Memory (MB): peak = 1351.414 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 76 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1440.543 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.002 . Memory (MB): peak = 1437.746 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
   A total of 72 instances were transformed.
   RAM64M => RAM64M (RAMD64E(x4)): 64 instances
   RAM64X1D => RAM64X1D (RAMD64E(x2)): 8 instances
 
-Synth Design complete | Checksum: 380fda2e
+Synth Design complete | Checksum: 4a7ba4a1
 INFO: [Common 17-83] Releasing license: Synthesis
-26 Infos, 74 Warnings, 3 Critical Warnings and 0 Errors encountered.
+35 Infos, 9 Warnings, 2 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:00:36 ; elapsed = 00:00:39 . Memory (MB): peak = 1440.543 ; gain = 905.504
+synth_design: Time (s): cpu = 00:01:01 ; elapsed = 00:01:13 . Memory (MB): peak = 1437.746 ; gain = 904.543
 INFO: [runtcl-6] Synthesis results are not added to the cache due to CRITICAL_WARNING
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1440.543 ; gain = 0.000
-INFO: [Common 17-1381] The checkpoint 'D:/expriment/my_assignment/my_assignment.runs/synth_1/stream_processor.dcp' has been generated.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.017 . Memory (MB): peak = 1437.746 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1/stream_processor.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file stream_processor_utilization_synth.rpt -pb stream_processor_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Fri Jun 13 16:39:54 2025...
+INFO: [Common 17-206] Exiting Vivado at Mon Jun 23 19:28:12 2025...

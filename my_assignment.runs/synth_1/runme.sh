@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='D:/expriment/my_assignment/my_assignment.runs/synth_1'
+HD_PWD='D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log

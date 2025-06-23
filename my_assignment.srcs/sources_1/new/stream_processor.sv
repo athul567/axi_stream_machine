@@ -34,25 +34,8 @@ module stream_processor (
 
 
 // Internal signals
-logic [7:0] buffer_1_1 [10:0];
-logic [7:0] buffer_1_2 [10:0];
-logic [7:0] buffer_1_3 [10:0];
-
-logic [7:0] buffer_2_1 [10:0];
-logic [7:0] buffer_2_2 [10:0];
-logic [7:0] buffer_2_3 [10:0];
-logic m_axis_tvalid_reg;
-logic m_axis_tlast_reg;
-logic [1:0] pkt_done_ch;
-
-logic [5:0] write_ptr_b[1:0];
 logic [1:0][24:0] fifo_din;  // 24-bit data + 8-bit control (tlast + padding)
 logic [1:0][24:0] fifo_dout;
-logic fifo_ready[1:0];
-logic [2:0] remaining_ptr_a_buf_1;
-logic [2:0] extra_ptr_b_buf_1;
-logic [2:0] remaining_ptr_a_buf_2;
-logic [2:0] extra_ptr_b_buf_2;
 logic [1:0][23:0] fifo_data; 
 logic [1:0] fifo_tlast;  
 logic [1:0] ch_enable;
@@ -61,7 +44,6 @@ logic [1:0] m_axis_tlast_sig;
 logic inter_buffer_tlast;
 logic  m_axis_tlast_both;
 logic [1:0] reset_init;
-//
 mux_st switch_select;
 logic [63:0] inter_buffer_data_stage_2;
 logic internal_buffer_valid_inter;
@@ -76,89 +58,21 @@ logic ch1_ready_stage_0;
 logic ch0_ready_stage_1;
 logic ch1_ready_stage_1;
 logic buffer_valid;
-
 logic [7:0] pkt_cnt_fifo [1:0];
 logic [63:0] m_axis_tdata_after_mux;
-
-
 logic non_inter_mode_ch_0;
 logic non_inter_mode_ch_1;
 logic ch0_stop;
 logic ch1_stop;
-
-
-    typedef enum logic [2:0] {
-        IDLE,
-        READ_FIFO,NON_INTER_MODE,INTER_MODE_CH1
-    } state_t;
-
-    state_t state;
-
-    // Extract data from FIFO 
-
-assign fifo_data[0]  = fifo_dout[0][23:0];
-assign fifo_data[1]  = fifo_dout[1][23:0];
-assign fifo_tlast[0]  = fifo_dout[0][24];    
-assign fifo_tlast[1]  = fifo_dout[1][24];
-
-
-assign m_axis_tlast_both = fifo_tlast[0] & fifo_tlast[1];
-    // Pack data into FIFO
-assign fifo_din[0] = {s_axis_tlast[0],s_axis_tdata[0]};
-assign fifo_din[1] = {s_axis_tlast[1],s_axis_tdata[1]};
-
-// Declare signals to connect to the submodule
-logic [23:0] fifo_data_out_1;
-logic [23:0] fifo_data_out_2;
-logic        fifo_last;
-logic        int_tready;
+state_t state;
 logic        fifo_rd_intr;
-
-logic        intr_axis_tvalid;
-logic        intr_axis_tlast;
-logic        intr_reset_init;
-
-logic [7:0] buffer_1 [7:0];
-logic [7:0] buffer_2 [7:0];
-logic [7:0] buffer_3 [7:0];
-logic load_buffer,first_data;
 logic [63:0] inter_buffer_data;
-logic [63:0] m_axis_tdata_reg;
-logic m_axis_tvalid_reg;
 logic ch1_last_stage_1;
 logic ch0_last_stage_1;
-
-
-    // === FIFO Instances ===
-    genvar ch;
-    generate
-        for (ch = 0; ch < 2; ch++) begin : sync_fifo
-            sync_fifo #(
-                .WIDTH(25),
-                .DEPTH(256)
-            ) fifo_inst (
-                .clk     (clk),
-                .reset   (~reset_n),
-                .wr_en   (fifo_wr[ch]),
-                .din     (fifo_din[ch]),
-                .full    (fifo_full[ch]),
-                .rd_en   (fifo_rd[ch]),
-                .dout    (fifo_dout[ch]),
-                .valid   (fifo_valid[ch]),
-                .empty   (fifo_empty[ch])
-            );
-        end
-    endgenerate
-
-
-
-
-
 logic [63:0] ch0_data_stage_1;
 logic [63:0] ch1_data_stage_1;
 logic [63:0] ch0_data_stage_2;
 logic [63:0] ch1_data_stage_2;
-
 logic both_fifo_valid;
 logic [7:0]  inter_buffer_tdata [7:0];
 logic [7:0]  non_inter_m_axis_tdata_slv_0 [7:0];
@@ -167,40 +81,26 @@ logic inter_buffer_has_data;
 logic ch0_valid_stage_1;
 logic ch1_valid_stage_1;
 logic ninter_enable;
-
-assign inter_buffer_data = {
-    inter_buffer_tdata[7],
-    inter_buffer_tdata[6],
-    inter_buffer_tdata[5],
-    inter_buffer_tdata[4],
-    inter_buffer_tdata[3],
-    inter_buffer_tdata[2],
-    inter_buffer_tdata[1],
-    inter_buffer_tdata[0]
-};
-
-assign ch0_data_stage_1 = {
-    non_inter_m_axis_tdata_slv_0[7],
-    non_inter_m_axis_tdata_slv_0[6],
-    non_inter_m_axis_tdata_slv_0[5],
-    non_inter_m_axis_tdata_slv_0[4],
-    non_inter_m_axis_tdata_slv_0[3],
-    non_inter_m_axis_tdata_slv_0[2],
-    non_inter_m_axis_tdata_slv_0[1],
-    non_inter_m_axis_tdata_slv_0[0]
-};
-
-assign ch1_data_stage_1 = {
-    non_inter_m_axis_tdata_slv_1[7],
-    non_inter_m_axis_tdata_slv_1[6],
-    non_inter_m_axis_tdata_slv_1[5],
-    non_inter_m_axis_tdata_slv_1[4],
-    non_inter_m_axis_tdata_slv_1[3],
-    non_inter_m_axis_tdata_slv_1[2],
-    non_inter_m_axis_tdata_slv_1[1],
-    non_inter_m_axis_tdata_slv_1[0]
-};
-
+// === FIFO Instances ===
+genvar ch;
+generate
+    for (ch = 0; ch < 2; ch++) begin : sync_fifo
+        sync_fifo #(
+            .WIDTH(25),
+            .DEPTH(256)
+        ) fifo_inst (
+            .clk     (clk),
+            .reset   (~reset_n),
+            .wr_en   (fifo_wr[ch]),
+            .din     (fifo_din[ch]),
+            .full    (fifo_full[ch]),
+            .rd_en   (fifo_rd[ch]),
+            .dout    (fifo_dout[ch]),
+            .valid   (fifo_valid[ch]),
+            .empty   (fifo_empty[ch])
+        );
+    end
+endgenerate
 non_inter_machine u_non_inter_machine_1  (
     .clk                			(clk),
     .reset_n            			(reset_n),
@@ -244,25 +144,68 @@ inter_machine u_inter_machine (
 	.inter_buffer_tdata		(inter_buffer_tdata)
 );
 
-    // === Input Side ===
-    assign fifo_wr[0]      = s_axis_tvalid[0] && !fifo_full[0];
-    assign fifo_wr[1]      = s_axis_tvalid[1] && !fifo_full[1];
-    assign s_axis_tready[0] = !fifo_full[0];
-    assign s_axis_tready[1] = !fifo_full[1];
-	assign both_fifo_valid  = fifo_valid [0] && fifo_valid[1];
+// Data to FIFO
+assign fifo_wr[0]      = s_axis_tvalid[0] && !fifo_full[0];
+assign fifo_wr[1]      = s_axis_tvalid[1] && !fifo_full[1];
+assign s_axis_tready[0] = !fifo_full[0];
+assign s_axis_tready[1] = !fifo_full[1];
+assign both_fifo_valid  = fifo_valid [0] && fifo_valid[1];
+
+    // Extract data from FIFO 
+assign fifo_data[0]  = fifo_dout[0][23:0];
+assign fifo_data[1]  = fifo_dout[1][23:0];
+assign fifo_tlast[0]  = fifo_dout[0][24];    
+assign fifo_tlast[1]  = fifo_dout[1][24];
+assign m_axis_tlast_both = fifo_tlast[0] & fifo_tlast[1];
+assign fifo_din[0] = {s_axis_tlast[0],s_axis_tdata[0]};
+assign fifo_din[1] = {s_axis_tlast[1],s_axis_tdata[1]};
 
 
+
+
+assign inter_buffer_data = {
+    inter_buffer_tdata[7],
+    inter_buffer_tdata[6],
+    inter_buffer_tdata[5],
+    inter_buffer_tdata[4],
+    inter_buffer_tdata[3],
+    inter_buffer_tdata[2],
+    inter_buffer_tdata[1],
+    inter_buffer_tdata[0]
+};
+
+assign ch0_data_stage_1 = {
+    non_inter_m_axis_tdata_slv_0[7],
+    non_inter_m_axis_tdata_slv_0[6],
+    non_inter_m_axis_tdata_slv_0[5],
+    non_inter_m_axis_tdata_slv_0[4],
+    non_inter_m_axis_tdata_slv_0[3],
+    non_inter_m_axis_tdata_slv_0[2],
+    non_inter_m_axis_tdata_slv_0[1],
+    non_inter_m_axis_tdata_slv_0[0]
+};
+
+assign ch1_data_stage_1 = {
+    non_inter_m_axis_tdata_slv_1[7],
+    non_inter_m_axis_tdata_slv_1[6],
+    non_inter_m_axis_tdata_slv_1[5],
+    non_inter_m_axis_tdata_slv_1[4],
+    non_inter_m_axis_tdata_slv_1[3],
+    non_inter_m_axis_tdata_slv_1[2],
+    non_inter_m_axis_tdata_slv_1[1],
+    non_inter_m_axis_tdata_slv_1[0]
+};
     // === Output FSM ===
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin
-            state <= IDLE;
+            state <= STATE_IDLE;
             status_packets_size_mismatch <= 0;
 			ch_enable  <=  2'b00;
 			inter_enable <= 0;
 			ninter_enable <= 0;
         end else begin
             case (state)
-                IDLE: begin
+                STATE_IDLE: begin
                     if (!config_mode) begin
                         state <= NON_INTER_MODE;
 						ch_enable  <=  2'b11;
@@ -304,16 +247,13 @@ inter_machine u_inter_machine (
 
 
 assign internal_buffer_ready_inter 			= !internal_buffer_valid_inter || (!m_axis_tvalid || m_axis_tready);
-assign ch0_ready_stage_0 	= (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
-assign ch1_ready_stage_0 	= (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
-assign ch0_ready_stage_1 = (!ch0_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
-assign ch1_ready_stage_1 = (!ch1_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
-
-
+assign ch0_ready_stage_0 					= (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
+assign ch1_ready_stage_0 					= (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
+assign ch0_ready_stage_1 					= (!ch0_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
+assign ch1_ready_stage_1 					= (!ch1_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
 // -------------------------
 // Stage 2: Internal Register before output
 // -------------------------
-// AXI output stage (connects to internal buffer)
 always_ff @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
 			inter_buffer_data_stage_2 <= '{default:8'h00};
@@ -361,7 +301,6 @@ end
 // -------------------------
 // Stage 3: AXI output stage
 // -------------------------
-// AXI output stage (connects to output port)
 always_ff @(posedge clk or negedge reset_n) begin
     if (!reset_n) begin
         m_axis_tdata <= '{default:8'h00};

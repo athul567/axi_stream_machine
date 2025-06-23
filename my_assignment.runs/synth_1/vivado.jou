@@ -3,12 +3,12 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Fri Jun 13 16:39:02 2025
-# Process ID: 15176
-# Current directory: D:/expriment/my_assignment/my_assignment.runs/synth_1
+# Start of session at: Mon Jun 23 19:26:35 2025
+# Process ID: 40020
+# Current directory: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1
 # Command line: vivado.exe -log stream_processor.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source stream_processor.tcl
-# Log file: D:/expriment/my_assignment/my_assignment.runs/synth_1/stream_processor.vds
-# Journal file: D:/expriment/my_assignment/my_assignment.runs/synth_1\vivado.jou
+# Log file: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1/stream_processor.vds
+# Journal file: D:/expriment/new/axi_stream_machine/my_assignment.runs/synth_1\vivado.jou
 # Running On        :athulbhx
 # Platform          :Windows Server 2016 or Windows 10
 # Operating System  :26100
@@ -17,8 +17,8 @@
 # CPU Physical cores:16
 # CPU Logical cores :22
 # Host memory       :16597 MB
-# Swap memory       :19327 MB
-# Total Virtual     :35924 MB
-# Available Virtual :13280 MB
+# Swap memory       :23764 MB
+# Total Virtual     :40362 MB
+# Available Virtual :3512 MB
 #-----------------------------------------------------------
 source stream_processor.tcl -notrace
