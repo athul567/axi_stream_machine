@@ -49,7 +49,23 @@ The architecture consists of multiple blocks as shown below:
 - Testbench module to simulate and validate DUT.
 - Currently supports basic directed tests.
 - Designed to be extended into a full UVM testbench in the future.
-
+- 
+## 📁 Folder Structure
+```
+my_assignment.srcs/
+├── sim_1/
+│   └── imports/
+│       └── new/
+│           └── stream_processor_tb.sv
+├── sources_1/
+│   ├── bd/
+│   └── new/
+│       ├── all_pkg.sv
+│       ├── inter_machine.sv
+│       ├── non_inter_machine.sv
+│       ├── stream_processor.sv
+│       └── sync_fifo.sv
+```
 ---
 
 ## ✅ Features
