@@ -199,7 +199,6 @@ assign ch1_data_stage_1 = {
     always_ff @(posedge clk or negedge reset_n) begin
         if (!reset_n) begin
             state <= STATE_IDLE;
-            status_packets_size_mismatch <= 0;
 			ch_enable  <=  2'b00;
 			inter_enable <= 0;
 			ninter_enable <= 0;
@@ -387,5 +386,15 @@ always_comb begin
 	end
 end 
 
-
+always_comb begin
+	if (both_fifo_valid) begin 
+		if (fifo_tlast[0] && fifo_tlast[1]) begin
+			status_packets_size_mismatch <= 0;
+		end else begin
+			status_packets_size_mismatch <= 1;
+		end
+	end else begin
+			status_packets_size_mismatch <= 0;
+	end
+end
 endmodule

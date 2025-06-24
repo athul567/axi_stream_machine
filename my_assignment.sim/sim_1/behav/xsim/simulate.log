@@ -30,22 +30,22 @@ Time resolution is 1 ps
 @145000 CH1 SENT BEAT 5/5: DATA=aeadac, LAST=1
 @145000 === Completed packet transmission on CH1 ===
 
-@145000                              -> MASTER_OUTPUT: 07_06_05_04_03_02_01_00 LAST=0
-@185000                              -> MASTER_OUTPUT: 00_0e_0d_0c_0b_0a_09_08 LAST=1
-@195000                              -> MASTER_OUTPUT: a7_a6_a5_a4_a3_a2_a1_a0 LAST=0
-@205000                              -> MASTER_OUTPUT: 00_ae_ad_ac_ab_aa_a9_a8 LAST=1
 @215000
 *** TEST: CH0 and CH1 sending packets ***
+@215000                              -> MASTER_OUTPUT: 07_06_05_04_03_02_01_00 LAST=0
 @225000
 === Starting packet transmission on CH0 (Size: 5) ===
 >> GEN CH0: a2=11 a1=10 a0=0f → DATA=11100f
 @225000
 === Starting packet transmission on CH1 (Size: 5) ===
 >> GEN CH1: a2=b1 a1=b0 a0=af → DATA=b1b0af
+@225000                              -> MASTER_OUTPUT: 00_0e_0d_0c_0b_0a_09_08 LAST=1
 @235000 CH0 SENT BEAT 1/5: DATA=11100f, LAST=0
 >> GEN CH0: a2=14 a1=13 a0=12 → DATA=141312
 @235000 CH1 SENT BEAT 1/5: DATA=b1b0af, LAST=0
 >> GEN CH1: a2=b4 a1=b3 a0=b2 → DATA=b4b3b2
+@235000                              -> MASTER_OUTPUT: a7_a6_a5_a4_a3_a2_a1_a0 LAST=0
+@245000                              -> MASTER_OUTPUT: 00_ae_ad_ac_ab_aa_a9_a8 LAST=1
 @255000 CH0 SENT BEAT 2/5: DATA=141312, LAST=0
 >> GEN CH0: a2=17 a1=16 a0=15 → DATA=171615
 @255000 CH1 SENT BEAT 2/5: DATA=b4b3b2, LAST=0
@@ -65,11 +65,8 @@ Time resolution is 1 ps
 @315000 === Completed packet transmission on CH1 ===
 
 @315000                              -> MASTER_OUTPUT: 16_15_14_13_12_11_10_0f LAST=0
-@365000                              -> MASTER_OUTPUT: 00_1d_1c_1b_1a_19_18_17 LAST=1
-@375000                              -> MASTER_OUTPUT: b6_b5_b4_b3_b2_b1_b0_af LAST=0
 @385000
 *** TEST: CH0 and CH1 sending packets ***
-@385000                              -> MASTER_OUTPUT: 00_bd_bc_bb_ba_b9_b8_b7 LAST=1
 @395000
 === Starting packet transmission on CH0 (Size: 5) ===
 >> GEN CH0: a2=20 a1=1f a0=1e → DATA=201f1e
@@ -80,10 +77,13 @@ Time resolution is 1 ps
 >> GEN CH0: a2=23 a1=22 a0=21 → DATA=232221
 @405000 CH1 SENT BEAT 1/5: DATA=c0bfbe, LAST=0
 >> GEN CH1: a2=c3 a1=c2 a0=c1 → DATA=c3c2c1
+@405000                              -> MASTER_OUTPUT: 00_1d_1c_1b_1a_19_18_17 LAST=1
+@415000                              -> MASTER_OUTPUT: b6_b5_b4_b3_b2_b1_b0_af LAST=0
 @425000 CH0 SENT BEAT 2/5: DATA=232221, LAST=0
 >> GEN CH0: a2=26 a1=25 a0=24 → DATA=262524
 @425000 CH1 SENT BEAT 2/5: DATA=c3c2c1, LAST=0
 >> GEN CH1: a2=c6 a1=c5 a0=c4 → DATA=c6c5c4
+@425000                              -> MASTER_OUTPUT: 00_bd_bc_bb_ba_b9_b8_b7 LAST=1
 @445000 CH0 SENT BEAT 3/5: DATA=262524, LAST=0
 >> GEN CH0: a2=29 a1=28 a0=27 → DATA=292827
 @445000 CH1 SENT BEAT 3/5: DATA=c6c5c4, LAST=0
@@ -98,18 +98,18 @@ Time resolution is 1 ps
 @485000 CH1 SENT BEAT 5/5: DATA=cccbca, LAST=1
 @485000 === Completed packet transmission on CH1 ===
 
-@505000                              -> MASTER_OUTPUT: 25_24_23_22_21_20_1f_1e LAST=0
+@485000                              -> MASTER_OUTPUT: 25_24_23_22_21_20_1f_1e LAST=0
 @525000                              -> MASTER_OUTPUT: 00_2c_2b_2a_29_28_27_26 LAST=1
+@535000                              -> MASTER_OUTPUT: c5_c4_c3_c2_c1_c0_bf_be LAST=0
+@545000                              -> MASTER_OUTPUT: 00_cc_cb_ca_c9_c8_c7_c6 LAST=1
 @555000
 *** TEST: CH0 and CH1 sending packets ***
-@555000                              -> MASTER_OUTPUT: c5_c4_c3_c2_c1_c0_bf_be LAST=0
 @565000
 === Starting packet transmission on CH0 (Size: 5) ===
 >> GEN CH0: a2=2f a1=2e a0=2d → DATA=2f2e2d
 @565000
 === Starting packet transmission on CH1 (Size: 5) ===
 >> GEN CH1: a2=cf a1=ce a0=cd → DATA=cfcecd
-@565000                              -> MASTER_OUTPUT: 00_cc_cb_ca_c9_c8_c7_c6 LAST=1
 @575000 CH0 SENT BEAT 1/5: DATA=2f2e2d, LAST=0
 >> GEN CH0: a2=32 a1=31 a0=30 → DATA=323130
 @575000 CH1 SENT BEAT 1/5: DATA=cfcecd, LAST=0
@@ -132,8 +132,9 @@ Time resolution is 1 ps
 @655000 CH1 SENT BEAT 5/5: DATA=dbdad9, LAST=1
 @655000 === Completed packet transmission on CH1 ===
 
-@665000                              -> MASTER_OUTPUT: 34_33_32_31_30_2f_2e_2d LAST=0
+@655000                              -> MASTER_OUTPUT: 34_33_32_31_30_2f_2e_2d LAST=0
 @695000                              -> MASTER_OUTPUT: 00_3b_3a_39_38_37_36_35 LAST=1
+@705000                              -> MASTER_OUTPUT: d4_d3_d2_d1_d0_cf_ce_cd LAST=0
 @725000
 *** TEST: CH0 and CH1 sending packets ***
 @735000
@@ -154,8 +155,7 @@ Time resolution is 1 ps
 >> GEN CH0: a2=47 a1=46 a0=45 → DATA=474645
 @785000 CH1 SENT BEAT 3/5: DATA=e4e3e2, LAST=0
 >> GEN CH1: a2=e7 a1=e6 a0=e5 → DATA=e7e6e5
-@785000                              -> MASTER_OUTPUT: d4_d3_d2_d1_d0_cf_ce_cd LAST=0
-@795000                              -> MASTER_OUTPUT: 00_db_da_d9_d8_d7_d6_d5 LAST=1
+@785000                              -> MASTER_OUTPUT: 00_db_da_d9_d8_d7_d6_d5 LAST=1
 @805000 CH0 SENT BEAT 4/5: DATA=474645, LAST=0
 >> GEN CH0: a2=4a a1=49 a0=48 → DATA=4a4948
 @805000 CH1 SENT BEAT 4/5: DATA=e7e6e5, LAST=0
@@ -166,17 +166,17 @@ Time resolution is 1 ps
 @825000 CH1 SENT BEAT 5/5: DATA=eae9e8, LAST=1
 @825000 === Completed packet transmission on CH1 ===
 
-@825000                              -> MASTER_OUTPUT: 43_42_41_40_3f_3e_3d_3c LAST=0
-@885000                              -> MASTER_OUTPUT: 00_4a_49_48_47_46_45_44 LAST=1
+@855000                              -> MASTER_OUTPUT: 43_42_41_40_3f_3e_3d_3c LAST=0
+@865000                              -> MASTER_OUTPUT: 00_4a_49_48_47_46_45_44 LAST=1
+@875000                              -> MASTER_OUTPUT: e3_e2_e1_e0_df_de_dd_dc LAST=0
+@885000                              -> MASTER_OUTPUT: 00_ea_e9_e8_e7_e6_e5_e4 LAST=1
 @895000
 *** TEST: CH0 and CH1 sending packets ***
-@895000                              -> MASTER_OUTPUT: e3_e2_e1_e0_df_de_dd_dc LAST=0
 @905000
 === Starting packet transmission on CH0 (Size: 5) ===
 >> GEN CH0: a2=4d a1=4c a0=4b → DATA=4d4c4b
 @905000
 === Starting packet transmission on CH1 (Size: 5) ===
 >> GEN CH1: a2=ed a1=ec a0=eb → DATA=edeceb
-@905000                              -> MASTER_OUTPUT: 00_ea_e9_e8_e7_e6_e5_e4 LAST=1
 @915000 CH0 SENT BEAT 1/5: DATA=4d4c4b, LAST=0
 >> GEN CH0: a2=50 a1=4f a0=
