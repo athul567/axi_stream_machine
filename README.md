@@ -91,4 +91,20 @@ The included testbench:
 - Verifies correct reassembly and output
 - Displays all output beats with proper `tlast` indication
 
-> Note: Output data is observed in simulation logs and can be extended with assertions and scoreboards.
+## Output Waveform
+```
+Test Case:
+        m_axis_tready = 0;
+        #2000;
+        m_axis_tready = 1;
+        #2000;
+```
+![image](https://github.com/user-attachments/assets/682eaaca-c678-4764-8157-c0c55feb8a5b)
+
+
+## 🚧 Next Steps
+
+> ✅ Output data is observed in simulation logs and can be extended with assertions and scoreboards  
+> ⚠️ `status_packets_size_mismatch`: Logic needs improvement  
+> 📊 Static Timing Analysis (STA) needs to be performed  
+> 🔄 Clock Domain Crossing (CDC) checks have to be run  
