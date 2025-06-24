@@ -121,7 +121,8 @@ module tb_stream_processor_2;
     // Master ready toggling
     initial begin
         m_axis_tready = 1;
-        #42;
+        #20;
+        m_axis_tready = 0;
         forever begin
             m_axis_tready = $urandom_range(0, 1);
             repeat($urandom_range(1, 4)) @(negedge clk);
@@ -130,7 +131,7 @@ module tb_stream_processor_2;
 
     task test_basic();
         $display("@%0t\n*** TEST: CH0 and CH1 sending packets ***", $time);
-        config_mode = 1;
+        config_mode = 0;
         #10;
 
         fork
@@ -147,14 +148,16 @@ module tb_stream_processor_2;
         s_axis_tdata = 0;
         s_axis_tvalid = 0;
         s_axis_tlast = 0;
-        config_mode = 1;
-        m_axis_tready = 1;
+        config_mode = 0;
+        //m_axis_tready = 1;
 
         #20;
         reset_n = 1;
         #20;
 
         $display("@%0t === AXI4-Stream Processor Testbench Started ===", $time);
+        test_basic();
+        #20;
         test_basic();
         #20;
         test_basic();

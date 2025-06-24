@@ -247,8 +247,13 @@ assign ch1_data_stage_1 = {
 
 
 assign internal_buffer_ready_inter 			= !internal_buffer_valid_inter || (!m_axis_tvalid || m_axis_tready);
-assign ch0_ready_stage_0 					= (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
-assign ch1_ready_stage_0 					= (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
+assign ch0_ready_stage_0 					= !ch0_valid_stage_2 || (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
+assign ch1_ready_stage_0 					= !ch1_valid_stage_2 || (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
+
+//assign ch0_ready_stage_0 					= (non_inter_mode_ch_0) && ch0_ready_stage_1;  // backpressure
+//assign ch1_ready_stage_0 					= (non_inter_mode_ch_1) && ch1_ready_stage_1;  // backpressure
+
+
 assign ch0_ready_stage_1 					= (!ch0_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
 assign ch1_ready_stage_1 					= (!ch1_valid_stage_2 || (!m_axis_tvalid || m_axis_tready));
 // -------------------------

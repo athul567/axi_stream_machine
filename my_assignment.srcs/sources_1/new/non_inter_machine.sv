@@ -51,8 +51,26 @@ logic buffer_3_has_data;
 // Condition to check buffer has data
 //assign non_inter_buffer_has_data = buffer_1_has_data || buffer_2_has_data || buffer_3_has_data;
 // FIFO read logic
-assign fifo_read = fifo_valid && (!buffer_1_has_data || !buffer_2_has_data || !buffer_3_has_data);
+//assign fifo_read = fifo_valid && (!buffer_1_has_data||!buffer_2_has_data||!buffer_3_has_data);
 
+always_comb begin
+    if ((buffer_1_has_data && data_wrt_reg_sel == STATE_0) ||
+        (buffer_1_has_data && data_wrt_reg_sel == STATE_1) ||
+        (buffer_1_has_data && data_wrt_reg_sel == STATE_2) ||
+        (buffer_2_has_data && data_wrt_reg_sel == STATE_2) ||
+        (buffer_2_has_data && data_wrt_reg_sel == STATE_3) ||
+        (buffer_2_has_data && data_wrt_reg_sel == STATE_4) ||
+        (buffer_2_has_data && data_wrt_reg_sel == STATE_5) ||
+        (buffer_3_has_data && data_wrt_reg_sel == STATE_5) ||
+        (buffer_3_has_data && data_wrt_reg_sel == STATE_6) ||
+        (buffer_3_has_data && data_wrt_reg_sel == STATE_7)) begin
+        fifo_read = 0;
+    end else if (!buffer_1_has_data || !buffer_2_has_data || !buffer_3_has_data) begin
+        fifo_read = fifo_valid;
+    end else begin
+        fifo_read = 0;
+    end
+end
 //Data selection logic
 always_comb begin
     if (switch_select==MUX_BUFFER_1) begin
@@ -120,7 +138,7 @@ end
 			if (enable) begin
 				case (data_wrt_reg_sel)
 					STATE_0: begin
-						if (fifo_valid&&!buffer_1_has_data&&!buffer_2_has_data&&!buffer_3_has_data) begin
+						if (fifo_valid&&!buffer_1_has_data) begin
 							if (fifo_tlast) begin   
 								buffer_1_has_data <= 1;
 								data_wrt_reg_sel <= STATE_0;
@@ -161,7 +179,7 @@ end
 						end
 					end
 					STATE_2: begin
-						if (fifo_valid&&!buffer_2_has_data) begin
+						if (fifo_valid&&!buffer_2_has_data&&!buffer_1_has_data) begin
 							if (fifo_tlast) begin   
 								buffer_2_has_data <= 1;
 								buffer_1_has_data <= 1;
@@ -225,7 +243,7 @@ end
 						end
 					end
 					STATE_5: begin
-						if (fifo_valid&&!buffer_2_has_data) begin
+						if (fifo_valid&&!buffer_2_has_data&&!buffer_3_has_data) begin
 							if (fifo_tlast) begin   
 								buffer_2_has_data <= 1;
 								buffer_3_has_data <= 1;
